@@ -1,0 +1,27 @@
+package {{PackageName}};
+
+/** THIS FILE IS MACHINE-GENERATED. ITS CREATOR IS <code>{{AuthorName}}</code> **/
+
+import org.restlet.Application;
+import org.restlet.Restlet;
+import org.restlet.routing.Router;
+
+import {{RestletSecurityPackage}}.ResourceProtector;
+
+/**
+ * The Root Application. All resources are children of this Application
+ * @author {{AuthorName}}
+ * @meta-author {{MetaAuthorName}}
+ */
+public class RootApplication extends Application {
+
+	@Override
+	public Restlet createRoot() {
+		Router router = new Router();
+
+		// Attach the resources
+		{{ResourceAttachment}}
+				
+		return router;
+	}
+}

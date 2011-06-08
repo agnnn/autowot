@@ -1,0 +1,151 @@
+package {{PackageName}};
+
+/** THIS FILE IS MACHINE-GENERATED. ITS CREATOR IS <code>{{AuthorName}}</code> **/
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.restlet.Context;
+import org.restlet.data.Form;
+import org.restlet.data.Parameter;
+import org.restlet.Request;
+import org.restlet.Response;
+import org.restlet.data.MediaType;
+import org.restlet.representation.Representation;
+import org.restlet.representation.Variant;
+
+/**
+ * The class implementing the Restlet of the resource {{ResourceName}}.
+ * @author {{AuthorName}}
+ * @meta-author {{MetaAuthorName}}
+ */
+public class {{ClassName}} extends BaseResource {
+
+	public {{ClassName}}() {
+		super();
+	}
+
+	public void handleGetters() {
+		// Get values for getter from the current resource representation by means of the methods specified
+		{{GetterMethods}}
+	}
+	
+	@Override
+	protected void doInit() {
+		super.doInit();
+		Set<org.restlet.data.Method> allowedMethods = new HashSet<org.restlet.data.Method>();
+		{{AllowGet}}
+		{{AllowPost}}
+		{{AllowPut}}
+		{{AllowDelete}}
+		setAllowedMethods(allowedMethods);
+		getResponse().setAllowedMethods(allowedMethods);
+	}
+	
+	@Override
+	protected Representation get(Variant variant) {
+		parseResourceInformation(getRequest());
+		
+		{{GetterMethods}}
+		
+		if (variant.getMediaType().equals(MediaType.TEXT_XML) || variant.getMediaType().equals(MediaType.APPLICATION_ALL_XML)) {
+			// Generate the XML representation of this resource.
+			return getRepresentationXML();
+		}
+		else if (variant.getMediaType().equals(MediaType.TEXT_HTML)) {
+			// Generate the HTML representation of this resource.
+			return getRepresentationHTML();
+		}
+		else if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)) {
+			// Generate the JSON representation of this resource.
+			return getRepresentationJSON();
+		}
+		return getRepresentationHTML();
+	}
+
+	@Override
+	protected Representation post(Representation entity, Variant variant) {
+	
+		if(!getAllowedMethods().contains(org.restlet.data.Method.POST)) {
+			getResponse().setStatus(org.restlet.data.Status.CLIENT_ERROR_METHOD_NOT_ALLOWED);
+			return null;
+		}
+		
+		// TODO: The entity may arrive in different forms (e.g. text/plain or x-www-form-urlencoded)... need to determine where to handle this (or whether to defer it to the end-user) 
+		parseResourceInformation(getRequest());
+		
+		{{PosterMethods}}
+		
+		if (variant.getMediaType().equals(MediaType.TEXT_XML) || variant.getMediaType().equals(MediaType.APPLICATION_ALL_XML)) {
+			// Generate the XML representation of this resource.
+			return getRepresentationXML();
+		}
+		else if (variant.getMediaType().equals(MediaType.TEXT_HTML)) {
+			// Generate the HTML representation of this resource.
+			return getRepresentationHTML();
+		}
+		else if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)) {
+			// Generate the JSON representation of this resource.
+			return getRepresentationJSON();
+		}
+		return getRepresentationHTML();
+	}
+
+	@Override
+	protected Representation put(Representation entity, Variant variant) {
+		
+		if(!getAllowedMethods().contains(org.restlet.data.Method.PUT)) {
+			getResponse().setStatus(org.restlet.data.Status.CLIENT_ERROR_METHOD_NOT_ALLOWED);
+			return null;
+		}
+		
+		// TODO: The entity may arrive in different forms (e.g. text/plain or x-www-form-urlencoded)... need to determine where to handle this (or whether to defer it to the end-user)
+		parseResourceInformation(getRequest());
+		
+		{{PutterMethods}}
+		
+		if (variant.getMediaType().equals(MediaType.TEXT_XML) || variant.getMediaType().equals(MediaType.APPLICATION_ALL_XML)) {
+			// Generate the XML representation of this resource.
+			return getRepresentationXML();
+		}
+		else if (variant.getMediaType().equals(MediaType.TEXT_HTML)) {
+			// Generate the HTML representation of this resource.
+			return getRepresentationHTML();
+		}
+		else if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)) {
+			// Generate the JSON representation of this resource.
+			return getRepresentationJSON();
+		}
+		return getRepresentationHTML();
+	}
+	
+	@Override
+	protected Representation delete(Variant variant) {
+		
+		if(!getAllowedMethods().contains(org.restlet.data.Method.DELETE)) {
+			getResponse().setStatus(org.restlet.data.Status.CLIENT_ERROR_METHOD_NOT_ALLOWED);
+			return null;
+		}
+		
+		// TODO: The entity may arrive in different forms (e.g. text/plain or x-www-form-urlencoded)... need to determine where to handle this (or whether to defer it to the end-user)
+		parseResourceInformation(getRequest());
+		
+		{{DeleterMethods}}
+		
+		if (variant.getMediaType().equals(MediaType.TEXT_XML) || variant.getMediaType().equals(MediaType.APPLICATION_ALL_XML)) {
+			// Generate the XML representation of this resource.
+			return getRepresentationXML();
+		}
+		else if (variant.getMediaType().equals(MediaType.TEXT_HTML)) {
+			// Generate the HTML representation of this resource.
+			return getRepresentationHTML();
+		}
+		else if (variant.getMediaType().equals(MediaType.APPLICATION_JSON)) {
+			// Generate the JSON representation of this resource.
+			return getRepresentationJSON();
+		}
+		return getRepresentationHTML();
+	}
+}
+

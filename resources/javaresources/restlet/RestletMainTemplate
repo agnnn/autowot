@@ -1,0 +1,115 @@
+package {{PackageName}};
+
+import java.io.File;
+import java.io.IOException;
+import java.net.ServerSocket;
+
+import org.restlet.Application;
+import org.restlet.Component;
+import org.restlet.resource.Directory;
+import org.restlet.Restlet;
+import org.restlet.data.Protocol;
+import {{RestletCommonsPackage}}.RestletConstants;
+
+/**
+ * The Root Restlet. 
+ * @author {{AuthorName}}
+ * @meta-author {{MetaAuthorName}}
+ *
+ */
+public class RestletMain {
+	private Component component = null;
+
+	
+	{{MakeStandalone}}public static void main(String [] args) {
+	{{MakeStandalone}}	new RestletMain().startServer();
+	{{MakeStandalone}}}
+	 	
+	/**
+	 * Start the Restlet Webserver
+	 */
+	public void startServer() {
+		if (RestletConstants.RESOURCES_DIRECTORY_PATH == null) {
+			File dir1 = new File ("."); // Read current directory path
+			String directory = "";
+			try {
+				directory = dir1.getCanonicalPath();
+			} catch (IOException e) {
+				System.out.println("Exception while getting current path: " + e.getMessage());
+			}
+
+			directory = directory.replace("\\", "/");
+			RestletConstants.RESOURCES_DIRECTORY_PATH = directory + "/webresources";
+
+			System.out.println("Using resources directory " + RestletConstants.RESOURCES_DIRECTORY_PATH);
+		}
+		else System.out.println("Using resources directory " + RestletConstants.RESOURCES_DIRECTORY_PATH);	
+		
+		try {
+			// Create a new Component
+			component = new Component();
+
+			// Attach project file system
+			Application images = new Application() {
+				@Override
+				public Restlet createRoot() {
+					return new Directory(getContext(), "file:///" + RestletConstants.RESOURCES_DIRECTORY_PATH);
+				}
+			};
+			component.getDefaultHost().attach(RestletConstants.RESOURCES_WEBRESOURCES_PATH, images);
+
+			// Attach project file system
+			Application feed = new Application() {
+				@Override
+				public Restlet createRoot() {
+					return new Directory(getContext(), "file:///" + RestletConstants.RESOURCES_DIRECTORY_PATH + "/feeds");
+				}
+			};
+			component.getDefaultHost().attach(RestletConstants.RESOURCES_FEEDS_PATH, feed);
+
+			// Starting with the default port, scan ports until a free one is found
+			while (!isPortAvailable(RestletConstants.SERVER_PORT)) {
+				RestletConstants.SERVER_PORT += 1;
+			}
+			
+			// Add a new HTTP server
+			component.getServers().add(Protocol.HTTP, RestletConstants.SERVER_PORT);
+			component.getClients().add(Protocol.FILE);
+			component.getDefaultHost().attach("", new RootApplication());
+
+			// Start the component.
+			component.start();
+		} catch (Exception e) {
+			// Something is wrong.
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Stop the Restlet Webserver
+	 */
+	public void stopServer() {
+		try {
+			System.out.println("Stopping the Server");
+			if (component != null) component.stop();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+			
+	/**
+	 * Test whether a port is available or not
+	 * @param port - The port to test
+	 * @return Whether a port is available
+	 */
+	private static boolean isPortAvailable(int port) {
+		try {
+			ServerSocket srv = new ServerSocket(port);
+			srv.close();
+			srv = null;
+			return true;  
+		} catch (IOException e) {
+			return false;
+		}
+	} 
+}

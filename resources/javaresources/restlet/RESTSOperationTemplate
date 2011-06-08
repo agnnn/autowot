@@ -1,0 +1,48 @@
+package {{PackageName}};
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class RESTSOperation {
+
+	private String method;
+	private URL address;
+	private String input;
+	private String output;
+	
+	public String getMethod() {
+		return this.method;
+	}
+	
+	public void setMethod(String value) {
+		this.method = value;
+	}
+
+	public URL getAddress() {
+		return this.address;
+	}
+	
+	public void setAddress(String value) {
+		try {
+			this.address = new URL(value);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String getInput() {
+		return this.input;
+	}
+	
+	public void setInput(String value) {
+		this.input = value;
+	}
+
+	public String getOutput() {
+		return this.output;
+	}
+	
+	public void setOutput(String value) {
+		this.output = value;
+	}
+}
