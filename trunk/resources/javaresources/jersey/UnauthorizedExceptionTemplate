@@ -1,0 +1,26 @@
+package {{PackageName}};
+
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import {{JerseyCommonsPackage}}.JerseyConstants;
+
+/**
+ * 
+ * @author {{AuthorName}}
+ *
+ */
+
+public class UnauthorizedException extends WebApplicationException {
+
+	private static final long serialVersionUID = 1L;
+
+	public UnauthorizedException() {
+			super(Response.status(Status.UNAUTHORIZED).header("WWW-Authenticate", JerseyConstants.getAuthChallengeString(null, null)).build());
+	}
+	
+	public UnauthorizedException(String nonce, String opaque) {
+		super(Response.status(Status.UNAUTHORIZED).header("WWW-Authenticate", JerseyConstants.getAuthChallengeString(nonce, opaque)).build());
+	}
+}

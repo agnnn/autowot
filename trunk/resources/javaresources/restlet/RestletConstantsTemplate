@@ -1,0 +1,31 @@
+import java.util.logging.Level;
+
+public class RestletConstants {
+	/**
+	 * The loglevel to use for general logging, set when launching the driver
+	 */
+	public static Level LOGLEVEL = Level.SEVERE;	
+	
+	// The server port on which the SPOTs are going to be available
+	public static Integer SERVER_PORT = 8080;
+	
+	// Paths to external resources, RESOURCES_DIRECTORY_PATH is set when launching the driver
+	public static String RESOURCES_DIRECTORY_PATH = null;
+	public static final String RESOURCES_CONFIGFILE_PATH = "config/configuration.xml";
+	public static final String RESOURCES_WEBRESOURCES_PATH = "/webresources";
+	public static final String RESOURCES_HTML_PATH = "webresources/html";
+	public static final String RESOURCES_JSON_PATH = "webresources/json";
+	public static final String RESOURCES_XML_PATH = "webresources/xml";
+	public static final String RESOURCES_STYLESHEET_PATH = "/webresources/stylesheets/main.css";	
+	public static final String RESOURCES_FEEDS_PATH = "/feeds";
+	
+	public static final Boolean USE_BASIC_AUTH = false;
+	public static final String REALM_NAME = "AutoWoT Secure Area";
+	public static String getAuthChallengeString(String nonce, String opaque) {
+		if(USE_BASIC_AUTH) {
+			return "Basic realm=\"" + REALM_NAME + "\"";
+		} else {
+			return "Digest realm=\"" + REALM_NAME + "\", nonce=\"" + nonce + "\", opaque=\"" + opaque + "\", stale=false, algorithm=MD5, qop=\"auth\"";
+		}
+	}
+}

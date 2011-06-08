@@ -1,0 +1,181 @@
+package {{PackageName}};
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+
+import {{JerseyCommonsPackage}}.JerseyConstants;
+
+/**
+ * 
+ * @author {{AuthorName}}
+ *
+ */
+
+public class ResourceProtector {
+	
+	protected static Map<String, String> nonceContainer = null;
+	
+	public static void protect(HttpServletRequest request, String[] authorizedHashes) {
+		if(nonceContainer == null) {
+			nonceContainer = new HashMap<String, String>();
+		}
+		
+		if(request.getHeader("Authorization") != null) {
+			String loginData = request.getHeader("Authorization");
+			if(JerseyConstants.USE_BASIC_AUTH && loginData.startsWith("Basic")) {
+				String loginHash = loginData.substring(6);
+				for(String hash : authorizedHashes) {
+					if(hash.equalsIgnoreCase(loginHash)) {
+						return;
+					}
+				}
+				throw new UnauthorizedException();
+			} else if (!JerseyConstants.USE_BASIC_AUTH && loginData.startsWith("Digest")) {
+				String[] requestArguments = parse_digest(loginData);
+				if(requestArguments != null) {
+					String opaque = requestArguments[7];
+					String nonce = nonceContainer.get(opaque);
+					
+					for(String hash : authorizedHashes) {
+						String plainText = new String(org.apache.commons.codec.binary.Base64.decodeBase64(hash));
+						String[] credentials = plainText.split(":");
+						System.out.println(credentials[0] + " ?= " + requestArguments[0]);
+						if(credentials[0].equalsIgnoreCase(requestArguments[0])) {
+							String ha1 = md5(credentials[0] + ":" + JerseyConstants.REALM_NAME + ":" + credentials[1]);
+							String ha2 = md5(request.getMethod() + ":" + requestArguments[1]);
+							String expected = md5(ha1 + ":" + nonce + ":" + requestArguments[2] + ":" + requestArguments[3] + ":" + requestArguments[4] + ":" + ha2);
+							//System.out.println("--->EXP: " + expected);
+							//System.out.println("--->IS:  " + requestArguments[5]);
+							if(expected.equalsIgnoreCase(requestArguments[5])) {
+								return;
+							}
+						}
+					}
+					System.out.println(loginData);
+					throw new UnauthorizedException(nonce, opaque);
+				}
+			}
+		}
+		
+		if(JerseyConstants.USE_BASIC_AUTH) {
+			throw new UnauthorizedException();
+		} else {
+			String opaque = md5(getRandomString(10));
+			String nonce = md5(getRandomString(10));
+			nonceContainer.put(opaque, nonce);
+			throw new UnauthorizedException(nonce, opaque);
+		}
+	}
+	
+	private static String getRandomString(int length) {
+		String myRandom = java.util.UUID.randomUUID().toString();
+		return myRandom.substring(length);
+		}
+	
+	private static String[] parse_digest(String loginData) {
+		Pattern pattern;
+		Matcher matcher;
+		String[] data = new String[8];
+		String values = loginData.substring(7);
+		// Username
+		pattern = Pattern.compile("username=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[0] = matcher.group(1);
+		} else {
+			return null;
+		}
+		// Uri
+		pattern = Pattern.compile("uri=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[1] = matcher.group(1);
+		} else {
+			return null;
+		}
+		
+		//nc
+		pattern = Pattern.compile("nc=(.*?), ");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[2] = matcher.group(1);
+		} else {
+			pattern = Pattern.compile("nc=\\\"(.*?)\\\"");
+			matcher = pattern.matcher(values);
+			if (matcher.find()) {
+				data[2] = matcher.group(1);
+			} else {
+				pattern = Pattern.compile("nc=(.*?)");
+				matcher = pattern.matcher(values);
+				if (matcher.find()) {
+					data[2] = matcher.group(1);
+				} else {
+					return null;
+				}
+			}
+		}
+		
+		// Cnone
+		pattern = Pattern.compile("cnonce=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[3] = matcher.group(1);
+		} else {
+			return null;
+		}
+		
+		pattern = Pattern.compile("qop=(.*?), ");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[4] = matcher.group(1);
+		} else {
+			pattern = Pattern.compile("qop=\\\"(.*?)\\\"");
+			matcher = pattern.matcher(values);
+			if (matcher.find()) {
+				data[4] = matcher.group(1);
+			} else {
+				pattern = Pattern.compile("qop=(.*?)");
+				matcher = pattern.matcher(values);
+				if (matcher.find()) {
+					data[4] = matcher.group(1);
+				} else {
+					return null;
+				}
+			}
+		}
+		
+		pattern = Pattern.compile("response=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[5] = matcher.group(1);
+		} else {
+			return null;
+		}
+		
+		pattern = Pattern.compile("nonce=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[6] = matcher.group(1);
+		} else {
+			return null;
+		}
+		
+		pattern = Pattern.compile("opaque=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[7] = matcher.group(1);
+		} else {
+			return null;
+		}
+		
+		return data;
+	}
+
+	private static String md5(String data) {
+		return new String(org.apache.commons.codec.digest.DigestUtils.md5Hex(data));
+	}
+}

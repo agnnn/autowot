@@ -1,0 +1,245 @@
+package {{PackageName}};
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.restlet.Context;
+import org.restlet.Request;
+import org.restlet.Response;
+import org.restlet.data.ChallengeRequest;
+import org.restlet.data.ChallengeScheme;
+import org.restlet.data.Status;
+import org.restlet.security.ChallengeAuthenticator;
+
+import {{RestletCommonsPackage}}.RestletConstants;
+
+public class ResourceProtector extends ChallengeAuthenticator{
+	
+	protected static Map<String, String> nonceContainer = null;
+	
+	protected String[] authorizedHashesGet = null;
+	protected String[] authorizedHashesPost = null;
+	protected String[] authorizedHashesPut = null;
+	protected String[] authorizedHashesDelete = null;
+	
+	public ResourceProtector(Context context, String[] authorizedHashesGet, String[] authorizedHashesPost, String[] authorizedHashesPut, String[] authorizedHashesDelete, Class<?> next) {
+		super(context, false, ChallengeScheme.CUSTOM, RestletConstants.REALM_NAME);
+		if(nonceContainer == null) {
+			nonceContainer = new HashMap<String, String>();
+		}
+		this.authorizedHashesGet = authorizedHashesGet;
+		this.authorizedHashesPost = authorizedHashesPost;
+		this.authorizedHashesPut = authorizedHashesPut;
+		this.authorizedHashesDelete = authorizedHashesDelete;
+		setRechallenging(true);
+		setNext(next);
+	}
+	
+	@Override
+    protected boolean authenticate(Request request, Response response) {
+		String[] authorizedHashes = null;
+		
+		if(request.getMethod().equals(org.restlet.data.Method.GET)) {
+			authorizedHashes = authorizedHashesGet;
+		} else if (request.getMethod().equals(org.restlet.data.Method.POST)) {
+			authorizedHashes = authorizedHashesPost;
+		} else if (request.getMethod().equals(org.restlet.data.Method.PUT)) {
+			authorizedHashes = authorizedHashesPut;
+		} else if (request.getMethod().equals(org.restlet.data.Method.DELETE)) {
+			authorizedHashes = authorizedHashesDelete;
+		} else {
+			response.setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+			return false;
+		}
+		
+		if(authorizedHashes == null || authorizedHashes.length == 0) {
+			return true;
+		}
+		
+		if (request.getChallengeResponse() == null) {
+			if(RestletConstants.USE_BASIC_AUTH) {
+				response.getChallengeRequests().add(this.createChallengeRequest(isRechallenging()));
+				response.setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+				return false;
+			} else {
+				response.setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+				ChallengeRequest req = new ChallengeRequest(ChallengeScheme.HTTP_DIGEST, RestletConstants.REALM_NAME);
+				req.setDigestAlgorithm("MD5");
+				String nonce = md5(getRandomString(10));
+				String opaque = md5(getRandomString(10));
+				nonceContainer.put(opaque, nonce);
+				req.setServerNonce(nonce);
+				req.setOpaque(opaque);
+				List<String> qualityOptions = new ArrayList<String>();
+				qualityOptions.add("auth");
+				req.setQualityOptions(qualityOptions);
+				List<ChallengeRequest> challengeRequests = new ArrayList<ChallengeRequest>();
+				challengeRequests.add(req);
+				response.setChallengeRequests(challengeRequests);
+				return false;
+			}
+        } else {
+        	if(RestletConstants.USE_BASIC_AUTH) {
+	            String base64Hash = request.getChallengeResponse().getRawValue();
+	            for(int i = 0; i<authorizedHashes.length; ++i) {
+	            	if(authorizedHashes[i].equalsIgnoreCase(base64Hash)) {
+	            		return true;
+	            	}
+	            }
+	            response.getChallengeRequests().add(this.createChallengeRequest(isRechallenging()));
+	            response.setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+	            return false;
+        	} else {
+        		String raw = request.getChallengeResponse().getRawValue();
+        		String[] requestArguments = parse_digest(raw);
+				if(requestArguments != null) {
+					String opaque = requestArguments[7];
+					String nonce = nonceContainer.get(opaque);
+					
+					for(String hash : authorizedHashes) {
+						String plainText = new String(org.apache.commons.codec.binary.Base64.decodeBase64(hash));
+						String[] credentials = plainText.split(":");
+						System.out.println(credentials[0] + " ?= " + requestArguments[0]);
+						if(credentials[0].equalsIgnoreCase(requestArguments[0])) {
+							String ha1 = md5(credentials[0] + ":" + RestletConstants.REALM_NAME + ":" + credentials[1]);
+							String ha2 = md5(request.getMethod() + ":" + requestArguments[1]);
+							String expected = md5(ha1 + ":" + nonce + ":" + requestArguments[2] + ":" + requestArguments[3] + ":" + requestArguments[4] + ":" + ha2);
+							//System.out.println("--->EXP: " + expected);
+							//System.out.println("--->IS:  " + requestArguments[5]);
+							if(expected.equalsIgnoreCase(requestArguments[5])) {
+								return true;
+							}
+						}
+					}
+				}
+        		System.out.println(raw);
+        		response.setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+        		ChallengeRequest req = new ChallengeRequest(ChallengeScheme.HTTP_DIGEST, RestletConstants.REALM_NAME);
+				req.setDigestAlgorithm("MD5");
+				String nonce = md5(getRandomString(10));
+				String opaque = md5(getRandomString(10));
+				nonceContainer.put(opaque, nonce);
+				req.setServerNonce(nonce);
+				req.setOpaque(opaque);
+				List<String> qualityOptions = new ArrayList<String>();
+				qualityOptions.add("auth");
+				req.setQualityOptions(qualityOptions);
+				List<ChallengeRequest> challengeRequests = new ArrayList<ChallengeRequest>();
+				challengeRequests.add(req);
+				response.setChallengeRequests(challengeRequests);
+ 	            return false;
+        	}
+        }
+    }
+	
+	private static String getRandomString(int length) {
+		String myRandom = java.util.UUID.randomUUID().toString();
+		return myRandom.substring(length);
+	}
+	
+	private static String[] parse_digest(String values) {
+		Pattern pattern;
+		Matcher matcher;
+		String[] data = new String[8];
+		// Username
+		pattern = Pattern.compile("username=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[0] = matcher.group(1);
+		} else {
+			return null;
+		}
+		// Uri
+		pattern = Pattern.compile("uri=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[1] = matcher.group(1);
+		} else {
+			return null;
+		}
+		
+		//nc
+		pattern = Pattern.compile("nc=(.*?), ");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[2] = matcher.group(1);
+		} else {
+			pattern = Pattern.compile("nc=\\\"(.*?)\\\"");
+			matcher = pattern.matcher(values);
+			if (matcher.find()) {
+				data[2] = matcher.group(1);
+			} else {
+				pattern = Pattern.compile("nc=(.*?)");
+				matcher = pattern.matcher(values);
+				if (matcher.find()) {
+					data[2] = matcher.group(1);
+				} else {
+					return null;
+				}
+			}
+		}
+		
+		// Cnone
+		pattern = Pattern.compile("cnonce=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[3] = matcher.group(1);
+		} else {
+			return null;
+		}
+		
+		pattern = Pattern.compile("qop=(.*?), ");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[4] = matcher.group(1);
+		} else {
+			pattern = Pattern.compile("qop=\\\"(.*?)\\\"");
+			matcher = pattern.matcher(values);
+			if (matcher.find()) {
+				data[4] = matcher.group(1);
+			} else {
+				pattern = Pattern.compile("qop=(.*?)");
+				matcher = pattern.matcher(values);
+				if (matcher.find()) {
+					data[4] = matcher.group(1);
+				} else {
+					return null;
+				}
+			}
+		}
+		
+		pattern = Pattern.compile("response=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[5] = matcher.group(1);
+		} else {
+			return null;
+		}
+		
+		pattern = Pattern.compile("nonce=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[6] = matcher.group(1);
+		} else {
+			return null;
+		}
+		
+		pattern = Pattern.compile("opaque=\\\"(.*?)\\\"");
+		matcher = pattern.matcher(values);
+		if (matcher.find()) {
+			data[7] = matcher.group(1);
+		} else {
+			return null;
+		}
+		
+		return data;
+	}
+
+	private static String md5(String data) {
+		return new String(org.apache.commons.codec.digest.DigestUtils.md5Hex(data));
+	}
+}

@@ -1,0 +1,19 @@
+package {{PackageName}};
+
+/**
+ * Class for handling HTTP calls on the created resources.
+ *
+ * @author {{AuthorName}}
+ * @meta-author {{MetaAuthorName}}
+ *
+ */
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class Handler {
+
+	{{HandlerMethods}}
+	
+}

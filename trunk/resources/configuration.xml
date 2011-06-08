@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DigitalStromController>
+	<resourceName>digitalStrom Controller</resourceName>
+	<resourceURI>/digitalstrom</resourceURI>
+	<methods>GET</methods>
+	<collectionMethod/>
+	<collectionMethodType>NONE</collectionMethodType>
+	<resourceDescription/>
+	<children>
+		<child>
+			<ApartmentPowerConsumption>
+				<resourceName>Apartment Power Consumption</resourceName>
+				<resourceURI>/digitalstrom/consumption</resourceURI>
+				<methods>GET</methods>
+				<collectionMethod/>
+				<collectionMethodType>NONE</collectionMethodType>
+				<resourceDescription/>
+				<children/>
+				<getter>
+					<getterName>Power Consumption Getter</getterName>
+					<getterMethod>getPowerConsumption</getterMethod>
+					<getterMethodType>JAVA</getterMethodType>
+					<getterOnChangeMethod/>
+					<getterOnChangeMethodType>NONE</getterOnChangeMethodType>
+					<getterDescription/>
+					<security>
+						<inheritUsers>true</inheritUsers>
+					</security>
+				</getter>
+				<poster/>
+				<putter/>
+				<deleter/>
+				<security>
+					<inheritUsers>true</inheritUsers>
+				</security>
+			</ApartmentPowerConsumption>
+		</child>
+		<child>
+			<ApartmentLightSwitch>
+				<resourceName>Apartment Light Switch</resourceName>
+				<resourceURI>/digitalstrom/lightswitch</resourceURI>
+				<methods>GET,PUT,POST</methods>
+				<collectionMethod/>
+				<collectionMethodType>NONE</collectionMethodType>
+				<resourceDescription/>
+				<children/>
+				<getter>
+					<getterName>Apartment Light Switch Getter</getterName>
+					<getterMethod>getLightSwitch</getterMethod>
+					<getterMethodType>JAVA</getterMethodType>
+					<getterOnChangeMethod/>
+					<getterOnChangeMethodType>NONE</getterOnChangeMethodType>
+					<getterDescription/>
+					<security>
+						<inheritUsers>true</inheritUsers>
+					</security>
+				</getter>
+				<poster>
+					<posterName>Apartment Light Switch Poster</posterName>
+					<posterMethod>switchLight</posterMethod>
+					<posterMethodType>JAVA</posterMethodType>
+					<posterArgType>String</posterArgType>
+					<posterShowType>Text</posterShowType>
+					<posterDescription/>
+					<security>
+						<inheritUsers>true</inheritUsers>
+					</security>
+				</poster>
+				<putter>
+					<putterName>Apartment Light Switch Putter</putterName>
+					<putterMethod>switchLight</putterMethod>
+					<putterMethodType>JAVA</putterMethodType>
+					<putterArgType>String</putterArgType>
+					<putterShowType>Text</putterShowType>
+					<putterDescription/>
+					<security>
+						<inheritUsers>true</inheritUsers>
+					</security>
+				</putter>
+				<deleter/>
+				<security>
+					<inheritUsers>true</inheritUsers>
+				</security>
+			</ApartmentLightSwitch>
+		</child>
+	</children>
+	<getter/>
+	<poster/>
+	<putter/>
+	<deleter/>
+	<security>
+		<inheritUsers>true</inheritUsers>
+	</security>
+</DigitalStromController>

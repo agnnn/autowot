@@ -1,0 +1,316 @@
+package {{PackageName}};
+
+import java.util.ArrayList;
+import java.util.List;
+
+import {{RestletCommonsPackage}}.RestletConstants;
+
+
+public class RESTMicroformat {
+	
+	public String resourceName = "";
+	public String resourceDescription = "";
+	public String resourceURI = "";
+	public String hostIdentifier = "";
+	
+	public List<String> childrenNames = new ArrayList<String>();
+	public List<String> childrenURIs = new ArrayList<String>();
+	public List<String> childrenDescriptions = new ArrayList<String>();
+	public List<String> childrenMethods = new ArrayList<String>();
+	
+	public String getterName = "";
+	public String getterDescription = "";
+	
+	public Boolean posterExists = false;
+	public String posterName = "";
+	public String posterDescription = "";
+	public String posterArgumentType = "";
+	public String posterPresentationType = "Text";
+
+	protected String unifiedMicroformat() {
+		boolean useProduct = true;
+		boolean useReview = true;
+		boolean useListing = false;
+		boolean useGeo = true;
+		boolean useRESTS = true;
+		boolean useAdditional = true;
+
+		String nameProperty = resourceName;
+		String identifierValueProperty = null;
+		String identifierTypeProperty = null;
+		String categoryProperty = null;
+		String brandProperty = "AutoWOT - Automatic Prototyping for the Web of Things";
+		String priceProperty = null;
+		String descriptionProperty = resourceDescription;
+		String photoProperty = "http://www.webofthings.com/photos/" + nameProperty;
+		String urlProperty = "http://www.webofthings.com/information/" + nameProperty;
+
+		String reviewDescriptionProperty = "This Resource has not yet been reviewed!";
+		String reviewItemtypeProperty = null;
+		String reviewerNameProperty = null;
+		String reviewDateReviewedProperty = null;
+		String reviewRatingProperty = null;
+		List<String> reviewTagsProperty = null;
+
+		String listingActionProperty = null;
+		String listerNameProperty = null;
+		String listingDescriptionProperty = null;
+		String listingDateListedProperty = null;
+		String listingDateExpiredProperty = null;
+		String listingPriceProperty = null;
+
+		String geoLatitudeProperty = null;
+		String geoLongitudeProperty = null;
+		String geoAltitudeProperty = null;
+
+		String externalHierarchyProperty = null;
+
+		// hRESTS, currently only allows one operation per service
+		List<RESTSService> restsServices = new ArrayList<RESTSService>();
+
+		// Getter is there for sure!
+		{
+			RESTSService service = new RESTSService();
+
+			service.setLabel(getterDescription);
+			service.setDataFormat("String");
+
+			RESTSOperation operation = new RESTSOperation();
+			operation.setAddress(hostIdentifier + resourceURI);
+			operation.setMethod("GET");
+			operation.setOutput(getterName);
+			operation.setInput("");
+
+			service.addOperation(operation);
+
+			restsServices.add(service);
+		}
+
+		if (posterExists) {
+			RESTSService service = new RESTSService();
+
+			service.setLabel(posterDescription);
+			service.setDataFormat(posterArgumentType);
+
+			RESTSOperation operation = new RESTSOperation();
+			operation.setAddress(hostIdentifier + resourceURI);
+			operation.setMethod("POST");
+			operation.setInput(posterName);
+			operation.setOutput("The updated Resource");
+
+			service.addOperation(operation);
+
+			restsServices.add(service);
+		}
+
+
+		/** HTML Buildup **/
+
+		String returnBuilder = "";
+
+		returnBuilder += "<p class = \"bigspacing\"><br/></p>\n";
+
+		if (useProduct) {
+			returnBuilder += "<h2 class = \"mftitle stress\">hProduct</h2><span class=\"hproduct\">\n";
+			if (nameProperty != null) returnBuilder += "<span class=\"mftitle\">Name: </span><span class=\"fn\">" + nameProperty + "</span><br/>\n";
+			if (identifierTypeProperty != null && identifierValueProperty != null) { 
+				returnBuilder += "<span class=\"mftitle\">UUID: </span><span class=\"identifier\"><span class = \"type\">" + identifierTypeProperty + "</span><span class = \"value\">" + identifierValueProperty + "</span></span><br/>\n";
+			}
+			returnBuilder += "<span class=\"mftitle\">Category: </span><span class=\"category\">" + categoryProperty + "</span><br/>\n";
+			if (brandProperty != null) returnBuilder += "<span class=\"mftitle\">Brand: </span><span class=\"brand\"><span class=\"fn n\"><span class=\"given-name\">" + brandProperty + "</span></span></span><br/>\n";
+			if (priceProperty != null) returnBuilder += "<span class=\"mftitle\">Price: </span><span class=\"price\">" + priceProperty + "</span><br/>\n";
+			if (descriptionProperty != null) returnBuilder += "<span class=\"mftitle\">Description: </span><span class=\"description\">" + descriptionProperty + "</span><br/>\n";
+			if (photoProperty != null) returnBuilder += "<span class=\"mftitle\">Photo: </span><a class=\"photo\" href=\"" + photoProperty + "\">" + photoProperty + "</a><br/>\n";
+			if (urlProperty != null) returnBuilder += "<span class=\"mftitle\">URL: </span><a class=\"url\" href=\"" + urlProperty + "\">" + urlProperty + "</a><br/>\n";
+
+			/*
+			returnBuilder += "<div class=\"adr\">";
+			if (externalHierarchyProperty != null) returnBuilder += "<span class=\"mftitle\">External Hierarchy: </span><span class=\"external-hierarchy\">/europe/ch/ethz/cnb</span><br/>\n";
+			"<span class=\"mftitle\">Street: </span><span class=\"street-address\">Karlsplatz 13</span><br/>\n" +
+			"<span class=\"mftitle\">Locality: </span><span class=\"locality\">Vienna</span><br/>\n" +
+			"<span class=\"mftitle\">Region: </span><abbr class=\"region\" title=\"Vienna\">W</abbr><br/>\n" +
+			"<span class=\"mftitle\">Postal Code: </span><span class=\"postal-code\">1040</span><br/>\n" +
+			"<span class=\"mftitle\">Country Name: </span><span class=\"country-name\">Austria</span><br/>\n" +
+			"<span class=\"mftitle\">External Hierarchy: </span><span class=\"external-hierarchy\">/europe/at/tuwien</span><br/>\n" +
+			returnBuilder += "</div>";
+			 */
+
+			returnBuilder += "</span>\n\n";
+		}
+
+		if (useReview) {
+			returnBuilder += "<h2 class = \"mftitle stress\">hReview</h2><span class=\"hreview\">\n";
+			returnBuilder += "";
+			if (reviewDescriptionProperty != null) returnBuilder += "<span class=\"mftitle\">Description: </span><span class=\"description\">" + reviewDescriptionProperty + "</span><br/>\n";
+			if (reviewItemtypeProperty != null) returnBuilder += "<span class=\"mftitle\">Item Type: </span><span class=\"type\">" + reviewItemtypeProperty + "</span><br/>\n";
+			if (reviewerNameProperty != null) returnBuilder += "<span class=\"mftitle\">Reviewer: </span><span class=\"reviewer\"><span class=\"fn n\"><span class=\"given-name\">" + reviewerNameProperty + "</span></span></span><br/>\n";
+			if (reviewDateReviewedProperty != null) returnBuilder += "<span class=\"mftitle\">Date Reviewed: </span><span class=\"dtreviewed\">" + reviewDateReviewedProperty + "</span><br/>\n";
+			if (reviewRatingProperty != null) returnBuilder += "<span class=\"mftitle\">Rating: </span><span class=\"rating\">" + reviewRatingProperty + "</span><br/>\n";
+			if (reviewTagsProperty != null) {
+				returnBuilder += "<span class=\"mftitle\">Tags: </span><span class=\"tags\">\n";
+				if (reviewTagsProperty.size() > 0) {
+					returnBuilder += "<ul>\n";
+					for (String tag : reviewTagsProperty) {
+						returnBuilder += "<li><span class=\"tag\">" + tag + "</span></li>\n";	
+					}
+					returnBuilder += "</ul>";
+				}
+				returnBuilder += "</span>";
+			}
+
+			returnBuilder += "</span>\n\n";
+		}
+
+		if (useListing) {
+			returnBuilder += "<h2 class = \"mftitle stress\">hListing</h2><span class=\"hlisting\">\n";
+			if (listingActionProperty != null) returnBuilder += "<span class=\"mftitle\">Listing Action: </span><span class=\"action\">" + listingActionProperty + "</span><br/>\n";
+			if (listerNameProperty != null) returnBuilder += "<span class=\"mftitle\">Lister: </span><span class = \"lister\"><span class=\"fn n\"><span class=\"given-name\">" + listerNameProperty + "</span></span></span><br/>\n";
+			if (listingDescriptionProperty != null) returnBuilder += "<span class=\"mftitle\">Description: </span><span class=\"description\">" + listingDescriptionProperty + "</span><br/>\n";
+			if (listingDateListedProperty != null) returnBuilder += "<span class=\"mftitle\">Date Listed: </span><span class=\"dtlisted\">" + listingDateListedProperty + "</span><br/>\n";
+			if (listingDateExpiredProperty != null) returnBuilder += "<span class=\"mftitle\">Date Expired: </span><span class=\"dtexpired\">" + listingDateExpiredProperty + "</span><br/>\n";
+			if (listingPriceProperty != null) returnBuilder += "<span class=\"mftitle\">Price: </span><span class=\"price\">" + listingPriceProperty + "</span><br/>\n";
+			returnBuilder += "</span>\n";
+		}
+
+		if (useGeo) {
+			returnBuilder += "<h2 class = \"mftitle stress\">Geo</h2><span class=\"geo\">\n"; 
+			if (geoLatitudeProperty != null) returnBuilder += "<span class=\"mftitle\">Latitude: </span><span class=\"latitude\">" + geoLatitudeProperty + "</span><br/>\n";
+			if (geoLongitudeProperty != null) returnBuilder += "<span class=\"mftitle\">Longitude: </span><span class=\"longitude\">" + geoLongitudeProperty + "</span><br/>\n";
+			if (geoAltitudeProperty != null) returnBuilder += "<span class=\"mftitle\">Altitude: </span><span class=\"altitude\">" + geoAltitudeProperty + "</span><br/>\n";
+			returnBuilder += "</span>\n";
+		}
+
+		if (useRESTS) {
+			if (restsServices.size() > 0) {
+				returnBuilder += "<h2 class = \"mftitle stress\">hRESTS</h2><span class=\"hrests\">\n";
+
+				for (RESTSService service : restsServices) {
+					returnBuilder += "<span class=\"service\">\n" +
+					"<span class=\"mftitle\">Label: </span><span class=\"label\">" + service.getLabel() + "</span><br/>\n" +
+					"<span class=\"mftitle\">Data Format: </span><span class=\"data-format\">" + service.getDataFormat() + "</span><br/>\n";
+
+					for (RESTSOperation operation : service.getOperations()) {
+						returnBuilder += "<span class=\"mftitle\">Operation: </span><span class=\"operation\"><br/>" +
+						"<span class=\"mftitle\">Method: </span><span class=\"method\">" + operation.getMethod() + "</span><br/>\n" +
+						"<span class=\"mftitle\">Address: </span><span class=\"address\">" + operation.getAddress() + "</span><br/>\n" +
+						"<span class=\"mftitle\">Input: </span><span class=\"input\">" + operation.getInput() + "</span><br/>\n" +
+						"<span class=\"mftitle\">Output: </span><span class=\"output\">" + operation.getOutput() + "</span><br/>\n" +
+						"</span>\n";
+					}
+
+					returnBuilder += "</span><br/>\n";
+				}
+				returnBuilder += "</span>\n";
+			}
+		}
+
+		if (useAdditional) {
+			returnBuilder += "<h2 class=\"mftitle stress\">Additional Information</h2><span class=\"infraWOTadditional\">\n";
+
+			// Handling children
+
+			returnBuilder += "<span class=\"mftitle\">Subresources</span>\n";
+			returnBuilder += "<ul class=\"subresources\">\n";
+			for (int i = 0; i < childrenNames.size(); i++) {
+				returnBuilder += "<li><span class=\"hsubresource\"><span class=\"subname\">" + childrenNames.get(i) + "</span> <span class=\"suburl\" href=\"" + hostIdentifier + childrenURIs.get(i) + "\">" + hostIdentifier + childrenURIs.get(i) + "</span></span></li>\n";
+			}			
+			returnBuilder += "</ul>\n";
+
+			returnBuilder += "</span>";
+		}
+
+		return returnBuilder;
+	}
+	
+	protected String includeMicroformat() {
+		if (RestletConstants.USE_UNIFIED_MICROFORMAT) return unifiedMicroformat();
+		else {
+			String returnBuilder = "";
+
+
+			returnBuilder += "<span class=\"hentity\">\n";
+			returnBuilder += "<p class = \"microformatcontainer\">";
+
+			{
+				// Device-related stuff
+
+				// returnBuilder += "<h1>hEntity Microformat</h1><br/>\n";
+
+				returnBuilder += "<p class = \"submfcontainer\"><span class=\"stress mftitle\">Device information</span>\n";
+				returnBuilder += "<ul><li><span class=\"mftitle\">Device name:</span>\n";
+				returnBuilder += "<span class=\"fn n\">" + resourceName + "</span></li>\n";
+
+				returnBuilder += "<li><span class=\"mftitle\">Device description:</span>\n";
+				returnBuilder += "<span class=\"description\">" + resourceDescription + "</span></li>\n";
+
+				returnBuilder += "<li><span class=\"mftitle\">Device URL:</span>\n";
+				returnBuilder += "<span class=\"url\" href=\"" + hostIdentifier + resourceURI + "\">" + hostIdentifier + resourceURI + "</span></li>\n";
+
+				returnBuilder += "<li><span class=\"mftitle\">Device tags</span>\n";
+				returnBuilder += "<ul>\n";
+				returnBuilder += "<li><span class=\"tag\">Tag</span></li>\n";
+				returnBuilder += "</ul></li>\n";
+
+				returnBuilder += "<li><span class=\"mftitle\">Device UUIDs</span>\n";
+				returnBuilder += "<ul>" +
+				"<li><span class=\"uuid\"><span class=\"type\">mac</span>: <span class=\"value\">" + resourceURI + hostIdentifier + "</span></span></li>\n" +
+				"</ul></li>\n";
+			}
+
+			{
+				// REST-related stuff
+
+				returnBuilder += "<li><span class=\"mftitle\">Available operations</span>\n";
+				returnBuilder += "<ul>\n";
+
+				// Handling posters
+				returnBuilder += "<li><span class=\"hoperation\"><span class=\"fn n\">" + posterName + "</span> ";
+				if (posterPresentationType.equalsIgnoreCase("Binary")) {
+					returnBuilder += "[<span class=\"acceptable-value\">on</span>, <span class=\"acceptable-value\">off</span>]</span></li>\n";		
+				}
+				else if (posterPresentationType.equalsIgnoreCase("Text") && posterArgumentType.equalsIgnoreCase("Integer")) {
+					returnBuilder += "[<span class=\"acceptable-value\"><span class=\"range\">0-10000</span>]</span></li>\n";
+				}
+				else if (posterPresentationType.equalsIgnoreCase("Text") && posterArgumentType.equalsIgnoreCase("Double")) {
+					returnBuilder += "[<span class=\"acceptable-value\"><span class=\"range\">0.0-10000.0</span>]</span></li>\n";
+				}
+
+				returnBuilder += "</ul></li>\n";
+
+				/*
+			returnBuilder += "<h3>Web hook callback URLs:</h3>\n";
+			returnBuilder += "<ul>\n" +
+				// TODO: Currently nothing in here...
+			"<li><span class=\"rms\"><a class=\"url\" href=\"/rms/callback\">/rms/callback</a>, filtering values: <span class=\"tag\">entrance</span><span class=\"tag\">alarm</span></span></li>\n" +
+			"</ul>\n";
+				 */
+
+				// Handling children
+				returnBuilder += "<li><span class=\"mftitle\">Subresources</span><span class=\"hsubresources\">\n";
+				returnBuilder += "<ul>\n";
+
+				for (int i = 0; i < childrenNames.size(); i++) {
+					returnBuilder += "<li><span class=\"hsubresource\"><span class=\"subname\">" + childrenNames.get(i) + "</span> <span class=\"suburl\" href=\"" + hostIdentifier + childrenURIs.get(i) + "\">" + hostIdentifier + childrenURIs.get(i) + "</span></span></li>\n";
+				}
+				returnBuilder += "</ul></span></li></ul></p>\n";
+			}
+
+			{
+				// hProduct
+
+				returnBuilder += "<span class=\"hproduct\">\n";
+				returnBuilder += "<p class = \"submfcontainer\"><span class=\"stress mftitle\">Product information</span>\n";
+				returnBuilder += "<ul>\n" +
+				"<li><span class=\"mftitle\">Product name: </span><span class=\"fn\">" + resourceName + "</span></li>\n" +
+				"<li><span class=\"mftitle\">Brand: </span><span class=\"brand\"><span class=\"fn n\"><span class=\"given-name\">ETHz WOT</span></span></span></li>\n" +
+				"<li><span class=\"mftitle\">Category: </span><span class=\"category\">WOT Driver</span></li>\n" +
+				"<li><span class=\"mftitle\">Price: </span><span class=\"price\">250 $</span></li>\n" +
+				"<li><span class=\"mftitle\">Description: </span><span class=\"description\">" + resourceDescription + "</span></li>\n" +
+				"</ul>";
+				returnBuilder += "</p></span>";
+			}
+			
+			return returnBuilder;
+		}
+	}
+}
