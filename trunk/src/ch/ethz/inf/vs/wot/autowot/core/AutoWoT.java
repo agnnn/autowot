@@ -1,5 +1,12 @@
 package ch.ethz.inf.vs.wot.autowot.core;
 
+import org.eclipse.swt.widgets.Display;
+
+import ch.ethz.inf.vs.wot.autowot.project.Project;
+import ch.ethz.inf.vs.wot.autowot.project.resources.AbstractResourceItem;
+import ch.ethz.inf.vs.wot.autowot.ui.views.MainUserInterface;
+import ch.ethz.inf.vs.wot.autowot.ui.views.UserInterface;
+
 /**
  * Main class of an AutoWoT instance
  * 
@@ -7,13 +14,6 @@ package ch.ethz.inf.vs.wot.autowot.core;
  * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
  * 
  */
-
-import org.eclipse.swt.widgets.Display;
-
-import ch.ethz.inf.vs.wot.autowot.project.Project;
-import ch.ethz.inf.vs.wot.autowot.project.resources.AbstractResourceItem;
-import ch.ethz.inf.vs.wot.autowot.ui.views.MainUserInterface;
-import ch.ethz.inf.vs.wot.autowot.ui.views.UserInterface;
 
 public class AutoWoT {
 	
@@ -47,14 +47,15 @@ public class AutoWoT {
 	}
 	
 	/**
-	 * Sets a project
+	 * Sets the current project
 	 */
 	public void setCurrentProject(Project currentProject) {
 		this.currentProject = currentProject;
 	}
 	
 	/**
-	 * @return current project
+	 * Get the current project
+	 * @return Current project
 	 */
 	public Project getCurrentProject() {
 		return currentProject;
@@ -68,7 +69,8 @@ public class AutoWoT {
 	}
 	
 	/**
-	 * @return current resource
+	 * Get the current resource
+	 * @return Current resource
 	 */
 	public AbstractResourceItem getCurrentResource() {
 		return currentResource;

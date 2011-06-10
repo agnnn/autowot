@@ -1,14 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.ui.resourcedisplay;
 
-/**
- * Listener reacting to clicks and selections in the Pretty and
- * XML mode
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 
@@ -18,6 +9,15 @@ import ch.ethz.inf.vs.wot.autowot.project.resources.AbstractResourceItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.ResourceItem;
 import ch.ethz.inf.vs.wot.autowot.ui.ViewStyle;
 import ch.ethz.inf.vs.wot.autowot.ui.views.UserInterface;
+
+/**
+ * Listener reacting to clicks and selections in the Pretty and
+ * XML mode
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class ResourceDisplaySelectionListener implements SelectionListener{
 	

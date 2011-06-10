@@ -1,14 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.ui.manipulatordisplay;
 
-/**
- * Class providing the sidebar displaying possible actions for the
- * current resource
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
@@ -19,6 +10,15 @@ import org.eclipse.swt.widgets.TableItem;
 import ch.ethz.inf.vs.wot.autowot.commons.Constants;
 import ch.ethz.inf.vs.wot.autowot.core.AutoWoT;
 import ch.ethz.inf.vs.wot.autowot.ui.views.UserInterface;
+
+/**
+ * Class providing the sidebar displaying possible actions for the
+ * current resource
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class ManipulatorDisplay extends Table {
 	

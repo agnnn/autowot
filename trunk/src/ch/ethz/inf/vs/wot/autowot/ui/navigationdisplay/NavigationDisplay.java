@@ -1,14 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.ui.navigationdisplay;
 
-/**
- * Class providing the navigation displaying the tree structure of
- * the project
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeSelection;
@@ -20,6 +11,15 @@ import ch.ethz.inf.vs.wot.autowot.project.handlers.HandlerCallbackType;
 import ch.ethz.inf.vs.wot.autowot.project.resources.AbstractResourceItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.ResourceItem;
 import ch.ethz.inf.vs.wot.autowot.ui.views.UserInterface;
+
+/**
+ * Class providing the navigation displaying the tree structure of
+ * the project
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class NavigationDisplay extends TreeViewer {
 	

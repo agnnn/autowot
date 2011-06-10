@@ -22,11 +22,15 @@ import ch.ethz.inf.vs.wot.autowot.project.security.UserLoginData;
  * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
  * 
  */
+
 public class XMLBuilder {
 	
 	private static Integer indentation = 0;
 	private static String currentHandlerCanonicalName = "";
 	
+	/**
+	 * Creates XML file of a project
+	 */
 	public static void createXMLStructure(Project project) {
 		if (project.getRootResource() != null) {
 			File outFile = null;
@@ -76,9 +80,6 @@ public class XMLBuilder {
 	
 	/**
 	 * Parse created resource structure recursively into this file
-	 * 
-	 * @param currentItem
-	 * @param writer
 	 */
 	protected static void createXMLrecursive(AbstractResourceItem currentItem, BufferedWriter writer) {
 		// Write output to file for a subresource

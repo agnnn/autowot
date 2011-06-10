@@ -1,13 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.ui.resourcedisplay;
 
-/**
- * Class providing the resource display
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +21,14 @@ import ch.ethz.inf.vs.wot.autowot.project.resources.ResourceItem;
 import ch.ethz.inf.vs.wot.autowot.project.security.UserLoginData;
 import ch.ethz.inf.vs.wot.autowot.ui.ViewStyle;
 import ch.ethz.inf.vs.wot.autowot.ui.views.UserInterface;
+
+/**
+ * Class providing the resource display
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class ResourceDisplay extends Table {
 	

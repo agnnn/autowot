@@ -1,13 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.builders.utils;
 
-/**
- * Utility class providing useful file system operations
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,6 +13,15 @@ import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
 import ch.ethz.inf.vs.wot.autowot.commons.Constants;
+
+/**
+ * Utility class providing useful file system operations
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
+
 
 public class FileOperations {
 	

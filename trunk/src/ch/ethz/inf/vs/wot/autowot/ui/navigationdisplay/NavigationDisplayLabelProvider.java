@@ -1,13 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.ui.navigationdisplay;
 
-/**
- * Class providing the icons of the navigation display
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
@@ -17,6 +9,14 @@ import ch.ethz.inf.vs.wot.autowot.project.resources.GetterItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.PosterItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.PutterItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.ResourceItem;
+
+/**
+ * Class providing the icons of the navigation display
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class NavigationDisplayLabelProvider implements ILabelProvider{
 

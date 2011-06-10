@@ -1,5 +1,8 @@
 package ch.ethz.inf.vs.wot.autowot.project.resources;
 
+import ch.ethz.inf.vs.wot.autowot.commons.Constants;
+import ch.ethz.inf.vs.wot.autowot.project.handlers.HandlerCallbackType;
+
 /**
  * Implementation of a Deleter
  * 
@@ -7,9 +10,6 @@ package ch.ethz.inf.vs.wot.autowot.project.resources;
  * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
  * 
  */
-
-import ch.ethz.inf.vs.wot.autowot.commons.Constants;
-import ch.ethz.inf.vs.wot.autowot.project.handlers.HandlerCallbackType;
 
 public class DeleterItem extends AbstractResourceItem {
 

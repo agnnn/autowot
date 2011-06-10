@@ -1,5 +1,7 @@
 package ch.ethz.inf.vs.wot.autowot.project.security;
 
+import ch.ethz.inf.vs.wot.autowot.project.resources.AbstractResourceItem;
+
 /**
  * 
  * Class holding data about a user
@@ -8,8 +10,6 @@ package ch.ethz.inf.vs.wot.autowot.project.security;
  * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
  * 
  */
-
-import ch.ethz.inf.vs.wot.autowot.project.resources.AbstractResourceItem;
 
 public class UserLoginData {
 	

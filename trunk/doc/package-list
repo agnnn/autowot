@@ -1,0 +1,16 @@
+ch.ethz.inf.vs.wot.autowot.builders
+ch.ethz.inf.vs.wot.autowot.builders.java
+ch.ethz.inf.vs.wot.autowot.builders.utils
+ch.ethz.inf.vs.wot.autowot.builders.xml
+ch.ethz.inf.vs.wot.autowot.commons
+ch.ethz.inf.vs.wot.autowot.core
+ch.ethz.inf.vs.wot.autowot.project
+ch.ethz.inf.vs.wot.autowot.project.handlers
+ch.ethz.inf.vs.wot.autowot.project.resources
+ch.ethz.inf.vs.wot.autowot.project.security
+ch.ethz.inf.vs.wot.autowot.ui
+ch.ethz.inf.vs.wot.autowot.ui.dialogs
+ch.ethz.inf.vs.wot.autowot.ui.manipulatordisplay
+ch.ethz.inf.vs.wot.autowot.ui.navigationdisplay
+ch.ethz.inf.vs.wot.autowot.ui.resourcedisplay
+ch.ethz.inf.vs.wot.autowot.ui.views

@@ -1,13 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.ui.navigationdisplay;
 
-/**
- * Class providing the content of the navigation display
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import java.util.ArrayList;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -17,6 +9,14 @@ import org.eclipse.jface.viewers.Viewer;
 import ch.ethz.inf.vs.wot.autowot.core.AutoWoT;
 import ch.ethz.inf.vs.wot.autowot.project.resources.AbstractResourceItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.ResourceItem;
+
+/**
+ * Class providing the content of the navigation display
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class NavigationDisplayContentProvider implements ITreeContentProvider {
 	
