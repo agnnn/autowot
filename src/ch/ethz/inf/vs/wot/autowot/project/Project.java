@@ -1,5 +1,9 @@
 package ch.ethz.inf.vs.wot.autowot.project;
 
+import java.util.List;
+
+import ch.ethz.inf.vs.wot.autowot.project.resources.ResourceItem;
+
 /**
  * 
  * Class holding data about a AutoWoT project
@@ -8,10 +12,6 @@ package ch.ethz.inf.vs.wot.autowot.project;
  * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
  * 
  */
-
-import java.util.List;
-
-import ch.ethz.inf.vs.wot.autowot.project.resources.ResourceItem;
 
 public class Project {
 	

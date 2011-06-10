@@ -1,13 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.ui.resourcedisplay;
 
-/**
- * Listener reacting to paint events and drawing the graphical representation
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -23,6 +15,14 @@ import ch.ethz.inf.vs.wot.autowot.project.resources.PosterItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.PutterItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.ResourceItem;
 import ch.ethz.inf.vs.wot.autowot.ui.views.UserInterface;
+
+/**
+ * Listener reacting to paint events and drawing the graphical representation
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class ResourceDisplayPaintListener implements PaintListener {
 	protected AutoWoT application = null;

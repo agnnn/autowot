@@ -1,13 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.builders.java;
 
-/**
- * Builder class for a Jersey server
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -27,6 +19,15 @@ import ch.ethz.inf.vs.wot.autowot.project.resources.PosterItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.PutterItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.ResourceItem;
 import ch.ethz.inf.vs.wot.autowot.project.security.UserLoginData;
+
+/**
+ * Builder class for a Jersey server
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
+
 
 public class JerseyJavaBuilder extends AbstractJavaBuilder {
 	

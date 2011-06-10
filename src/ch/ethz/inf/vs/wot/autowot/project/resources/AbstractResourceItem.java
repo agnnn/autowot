@@ -1,5 +1,10 @@
 package ch.ethz.inf.vs.wot.autowot.project.resources;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.ethz.inf.vs.wot.autowot.project.security.UserLoginData;
+
 /**
  * Implementation of an abstract Resource Item, this is the base class for ResourceItem, GetterItem, PosterItem and PutterItem
  * 
@@ -7,11 +12,6 @@ package ch.ethz.inf.vs.wot.autowot.project.resources;
  * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
  * 
  */
-
-import java.util.ArrayList;
-import java.util.List;
-
-import ch.ethz.inf.vs.wot.autowot.project.security.UserLoginData;
 
 public abstract class AbstractResourceItem {
 	

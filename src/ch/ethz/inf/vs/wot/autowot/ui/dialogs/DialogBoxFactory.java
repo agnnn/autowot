@@ -1,13 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.ui.dialogs;
 
-/**
- * Utility class providing different dialog boxes
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -30,6 +22,14 @@ import ch.ethz.inf.vs.wot.autowot.commons.ToolTips;
 import ch.ethz.inf.vs.wot.autowot.core.AutoWoT;
 import ch.ethz.inf.vs.wot.autowot.project.handlers.HandlerCallbackType;
 import ch.ethz.inf.vs.wot.autowot.project.security.UserLoginData;
+
+/**
+ * Utility class providing different dialog boxes
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class DialogBoxFactory {
 	

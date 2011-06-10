@@ -1,14 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.core;
 
-/**
- * 
- * Class for parsing an XML project file
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,6 +14,15 @@ import ch.ethz.inf.vs.wot.autowot.project.resources.GetterItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.PosterItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.PutterItem;
 import ch.ethz.inf.vs.wot.autowot.project.resources.ResourceItem;
+
+/**
+ * 
+ * Class for parsing an XML project file
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class FileHandler {
 

@@ -1,14 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.builders.java;
 
-/**
- * 
- * Super class for all Java Builders
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +11,15 @@ import ch.ethz.inf.vs.wot.autowot.commons.Constants;
 import ch.ethz.inf.vs.wot.autowot.project.Project;
 import ch.ethz.inf.vs.wot.autowot.project.handlers.HandlerCallback;
 import ch.ethz.inf.vs.wot.autowot.project.resources.ResourceItem;
+
+/**
+ * 
+ * Super class for all Java Builders
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public abstract class AbstractJavaBuilder {
 	

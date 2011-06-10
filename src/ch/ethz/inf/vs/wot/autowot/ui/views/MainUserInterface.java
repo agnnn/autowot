@@ -1,14 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.ui.views;
 
-/**
- * Class providing an implementation of UserInterface and drawing
- * all required elements
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
@@ -48,6 +39,15 @@ import ch.ethz.inf.vs.wot.autowot.ui.manipulatordisplay.ManipulatorDisplay;
 import ch.ethz.inf.vs.wot.autowot.ui.navigationdisplay.NavigationDisplay;
 import ch.ethz.inf.vs.wot.autowot.ui.resourcedisplay.ResourceDisplay;
 import ch.ethz.inf.vs.wot.autowot.ui.resourcedisplay.ResourceDisplayDropListener;
+
+/**
+ * Class providing an implementation of UserInterface and drawing
+ * all required elements
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class MainUserInterface extends UserInterface {
 	

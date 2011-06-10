@@ -1,13 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.project.resources;
 
-/**
- * Implementation of a Resource Item that can have subresources
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,6 +12,14 @@ import java.util.regex.Pattern;
 
 import ch.ethz.inf.vs.wot.autowot.commons.Constants;
 import ch.ethz.inf.vs.wot.autowot.project.handlers.HandlerCallbackType;
+
+/**
+ * Implementation of a Resource Item that can have subresources
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class ResourceItem extends AbstractResourceItem {
 

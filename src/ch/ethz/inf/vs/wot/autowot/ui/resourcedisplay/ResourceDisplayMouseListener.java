@@ -1,14 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.ui.resourcedisplay;
 
-/**
- * Listener reacting to click events on the display area in the
- * graphical mode
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +9,15 @@ import org.eclipse.swt.events.MouseListener;
 import ch.ethz.inf.vs.wot.autowot.core.AutoWoT;
 import ch.ethz.inf.vs.wot.autowot.project.resources.AbstractResourceItem;
 import ch.ethz.inf.vs.wot.autowot.ui.views.UserInterface;
+
+/**
+ * Listener reacting to click events on the display area in the
+ * graphical mode
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class ResourceDisplayMouseListener implements MouseListener{
 	

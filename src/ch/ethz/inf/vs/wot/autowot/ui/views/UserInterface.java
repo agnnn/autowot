@@ -1,5 +1,13 @@
 package ch.ethz.inf.vs.wot.autowot.ui.views;
 
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+
+import ch.ethz.inf.vs.wot.autowot.core.AutoWoT;
+import ch.ethz.inf.vs.wot.autowot.ui.manipulatordisplay.ManipulatorDisplay;
+import ch.ethz.inf.vs.wot.autowot.ui.navigationdisplay.NavigationDisplay;
+import ch.ethz.inf.vs.wot.autowot.ui.resourcedisplay.ResourceDisplay;
+
 /**
  * Abstract class providing basic elements required by a GUI
  * Inherit from this class when designing your own interface
@@ -8,14 +16,6 @@ package ch.ethz.inf.vs.wot.autowot.ui.views;
  * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
  * 
  */
-
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-
-import ch.ethz.inf.vs.wot.autowot.core.AutoWoT;
-import ch.ethz.inf.vs.wot.autowot.ui.manipulatordisplay.ManipulatorDisplay;
-import ch.ethz.inf.vs.wot.autowot.ui.navigationdisplay.NavigationDisplay;
-import ch.ethz.inf.vs.wot.autowot.ui.resourcedisplay.ResourceDisplay;
 
 public abstract class UserInterface {
 	

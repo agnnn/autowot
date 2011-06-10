@@ -1,13 +1,5 @@
 package ch.ethz.inf.vs.wot.autowot.ui.resourcedisplay;
 
-/**
- * Listener reacting to dropping an action string on the display area
- * 
- * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
- * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
- * 
- */
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -35,6 +27,14 @@ import ch.ethz.inf.vs.wot.autowot.project.security.UserLoginData;
 import ch.ethz.inf.vs.wot.autowot.ui.ViewStyle;
 import ch.ethz.inf.vs.wot.autowot.ui.dialogs.DialogBoxFactory;
 import ch.ethz.inf.vs.wot.autowot.ui.views.UserInterface;
+
+/**
+ * Listener reacting to dropping an action string on the display area
+ * 
+ * @author Simon Mayer, simon.mayer@inf.ethz.ch, ETH Zurich
+ * @author Claude Barthels, cbarthels@student.ethz.ch, ETH Zurich
+ * 
+ */
 
 public class ResourceDisplayDropListener implements DropTargetListener {
 	
