@@ -517,7 +517,7 @@ public class JerseyJavaBuilder extends AbstractJavaBuilder {
 				hashList += "}";
 				resourceTemplate = resourceTemplate.replace("{{AuthorizedHashesGet}}", hashList);
 				resourceTemplate = resourceTemplate.replace("{{ResourceProtectorGet}}", "ResourceProtector.protect(request, authorizedHashesGet);");
-			} else if(currentClass.isRestricted()) {
+			} else if(!currentClass.hasGetter() && currentClass.isRestricted()) {
 				String hashList = "{";
 				List<UserLoginData> users = currentClass.getAuthorizedUsers();
 				users.addAll(currentClass.getInheritedUsers());
