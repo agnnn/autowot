@@ -37,14 +37,14 @@ public class HandlerCallback {
 		String callbackStub = "";
 		if (getHTTPMethod().equalsIgnoreCase("GET")) {
 			if(getType().equals(HandlerCallbackType.PYTHON)) {
-				callbackStub += "public static String " + getMethodName() + "(HashMap<String, Object> source) {\n" +
+				callbackStub += "public synchronized static String " + getMethodName() + "(HashMap<String, Object> source) {\n" +
 						"\t\torg.python.util.PythonInterpreter pythonInterpreter = new org.python.util.PythonInterpreter();\n" +
 						"\t\tpythonInterpreter.exec(\"print 'A GET was called on the dynamic resource'\");\n" +
 						"\t\tpythonInterpreter.exec(\"message = 'Hello World!'\");\n" +
 						"\t\treturn pythonInterpreter.get(\"message\").toString();\n" +
 						"\t}";
 			} else {
-				callbackStub += "public static String " + getMethodName() + "(HashMap<String, Object> source) {\n" +
+				callbackStub += "public synchronized static String " + getMethodName() + "(HashMap<String, Object> source) {\n" +
 						"\t\tSystem.out.println(\"A GET was called on the dynamic resource \\\"\" + source + \"\\\"\");\n" +
 						"\t\t{External Call}\n" +
 						"\t\treturn \"Hello World!\";\n" +
@@ -52,13 +52,13 @@ public class HandlerCallback {
 			}
 		} else if (getHTTPMethod().equalsIgnoreCase("POST")) {
 			if(getType().equals(HandlerCallbackType.PYTHON)) {
-				callbackStub += "public static void " + getMethodName() + "(HashMap<String, Object> source, Object posterVar) {\n" +
+				callbackStub += "public synchronized static void " + getMethodName() + "(HashMap<String, Object> source, Object posterVar) {\n" +
 						"\t\torg.python.util.PythonInterpreter pythonInterpreter = new org.python.util.PythonInterpreter();\n" +
 						"\t\tpythonInterpreter.exec(\"print 'A POST was called on the dynamic resource'\");\n" +
 						"\t\tfor(String key : source.keySet()) System.out.println(\"\\t\\\" + key + \\\": \" + source.get(key));\n" +
 						"\t}";
 			} else {
-				callbackStub += "public static void " + getMethodName() + "(HashMap<String, Object> source, Object posterVar) {\n" +
+				callbackStub += "public synchronized static void " + getMethodName() + "(HashMap<String, Object> source, Object posterVar) {\n" +
 						"\t\tSystem.out.println(\"A POST was called on the dynamic resource with data: \\\"\" + posterVar + \"\\\"\");\n" +
 						"\t\t{External Call}\n" +
 						"\t\tfor(String key : source.keySet()) System.out.println(\"\\t\\\" + key + \\\": \" + source.get(key));\n" +
@@ -66,13 +66,13 @@ public class HandlerCallback {
 			}
 		} else if (getHTTPMethod().equalsIgnoreCase("PUT")) {
 			if(getType().equals(HandlerCallbackType.PYTHON)) {
-				callbackStub += "public static void " + getMethodName() + "(HashMap<String, Object> source, Object putterVar) {\n" +
+				callbackStub += "public synchronized static void " + getMethodName() + "(HashMap<String, Object> source, Object putterVar) {\n" +
 						"\t\torg.python.util.PythonInterpreter pythonInterpreter = new org.python.util.PythonInterpreter();\n" +
 						"\t\tpythonInterpreter.exec(\"print 'A PUT was called on the dynamic resource'\");\n" +
 						"\t\tfor(String key : source.keySet()) System.out.println(\"\\t\\\" + key + \\\": \" + source.get(key));\n" +
 						"\t}";
 			} else {
-				callbackStub += "public static void " + getMethodName() + "(HashMap<String, Object> source, Object putterVar) {\n" +
+				callbackStub += "public synchronized static void " + getMethodName() + "(HashMap<String, Object> source, Object putterVar) {\n" +
 						"\t\tSystem.out.println(\"A PUT was called on the dynamic resource \\\"\" + source + \"\\\" with data: \\\"\" + putterVar + \"\\\"\");\n" +
 						"\t\t{External Call}\n" +
 						"\t\tfor(String key : source.keySet()) System.out.println(\"\\t\\\" + key + \\\": \" + source.get(key));\n" +
@@ -80,13 +80,13 @@ public class HandlerCallback {
 			}
 		} else if (getHTTPMethod().equalsIgnoreCase("DELETE")) {
 			if(getType().equals(HandlerCallbackType.PYTHON)) {
-				callbackStub += "public static void " + getMethodName() + "(HashMap<String, Object> source) {\n" +
+				callbackStub += "public synchronized static void " + getMethodName() + "(HashMap<String, Object> source) {\n" +
 						"\t\torg.python.util.PythonInterpreter pythonInterpreter = new org.python.util.PythonInterpreter();\n" +
 						"\t\tpythonInterpreter.exec(\"print 'A DELETE was called on the dynamic resource'\");\n" +
 						"\t\tfor(String key : source.keySet()) System.out.println(\"\\t\\\" + key + \\\": \" + source.get(key));\n" +
 						"\t}";
 			} else {
-				callbackStub += "public static void " + getMethodName() + "(HashMap<String, Object> source) {\n" +
+				callbackStub += "public synchronized static void " + getMethodName() + "(HashMap<String, Object> source) {\n" +
 						"\t\tSystem.out.println(\"A DELETE was called on the dynamic resource \\\"\" + source + \"\\\"\");\n" +
 						"\t\t{External Call}\n" +
 						"\t\tfor(String key : source.keySet()) System.out.println(\"\\t\\\" + key + \\\": \" + source.get(key));\n" +
@@ -94,7 +94,7 @@ public class HandlerCallback {
 			}
 		} else if (getHTTPMethod().equalsIgnoreCase("COLLECT")) {
 			if(getType().equals(HandlerCallbackType.PYTHON)) {
-				callbackStub += "public static List<String> " + getMethodName() + "(HashMap<String, Object> source) {\n" +
+				callbackStub += "public synchronized static List<String> " + getMethodName() + "(HashMap<String, Object> source) {\n" +
 						"\t\tSystem.out.println(\"A reflexive call has been executed on the dynamic resource \\\"\" + source + \"\\\"\");\n" +
 						"\t\tList<String> returnList = new ArrayList<String>();\n" +
 						"\t\torg.python.util.PythonInterpreter pythonInterpreter = new org.python.util.PythonInterpreter();\n" +
@@ -108,7 +108,7 @@ public class HandlerCallback {
 						"\t\treturn returnList;\n" +
 						"\t }";
 			} else {
-				callbackStub += "public static List<String> " + getMethodName() + "(HashMap<String, Object> source) {\n" +
+				callbackStub += "public synchronized static List<String> " + getMethodName() + "(HashMap<String, Object> source) {\n" +
 						"\t\t{External Call}\n" +
 						"\t\tSystem.out.println(\"A reflexive call has been executed on the dynamic resource \\\"\" + source + \"\\\"\");\n" +
 						"\t\tList<String> returnList = new ArrayList<String>();\n" +
