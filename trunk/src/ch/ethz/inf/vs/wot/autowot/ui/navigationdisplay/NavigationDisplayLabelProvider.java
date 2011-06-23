@@ -48,15 +48,15 @@ public class NavigationDisplayLabelProvider implements ILabelProvider{
 	public Image getImage(Object arg0) {
 		Image result = null;
 		if(arg0 instanceof ResourceItem) {
-			result = new Image(null, "images/resource.png");
+			result = new Image(null, this.getClass().getResourceAsStream("/resource.png"));
 		} else if(arg0 instanceof GetterItem) {
-			result = new Image(null, "images/getter.png");
+			result = new Image(null, this.getClass().getResourceAsStream("/getter.png"));
 		} else if(arg0 instanceof PosterItem) {
-			result = new Image(null, "images/poster.png");
+			result = new Image(null, this.getClass().getResourceAsStream("/poster.png"));
 		} else if(arg0 instanceof PutterItem) {
-			result = new Image(null, "images/putter.png");
+			result = new Image(null, this.getClass().getResourceAsStream("/putter.png"));
 		} else if(arg0 instanceof DeleterItem) {
-			result = new Image(null, "images/deleter.png");
+			result = new Image(null, this.getClass().getResourceAsStream("/deleter.png"));
 		}
 		return result;
 	}
