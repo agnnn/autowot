@@ -33,8 +33,8 @@ Locate the file Handler.java, open it and you will see the two functions 'getNam
 
 Next add a static field to the class holding the name: `protected static String name = "World";`
 
-Then edit the body of the 'getNameHandler' function to 'return "Hello " + name;'
+Then edit the body of the `getNameHandler` function to `return "Hello " + name;`
 
-Add one statement to the body of the function 'postNameHandler': 'name = (String) posterVar;'
+Add one statement to the body of the function `postNameHandler`: `name = (String) posterVar;`
 
-That was it! You can run the server and browse to 'http://localhost:8080/mymain' and you should see the output "Hello World" and a text box below, enter your name, click on the submit button and enjoy!
+That was it! You can run the server and browse to `http://localhost:8080/mymain` and you should see the output "Hello World" and a text box below, enter your name, click on the submit button and enjoy!
