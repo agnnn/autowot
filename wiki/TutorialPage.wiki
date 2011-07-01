@@ -33,7 +33,7 @@ Locate the file Handler.java, open it and you will see the two functions 'getNam
 
 Next add a static field to the class holding the name: `protected static String name = "World";`
 
-Then edit the body of the `getNameHandler` function to `return "Hello " + name;`
+Then edit the body of the `getNameHandler` function to: `return "Hello " + name;`
 
 Add one statement to the body of the function `postNameHandler`: `name = (String) posterVar;`
 
