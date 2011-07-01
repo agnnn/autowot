@@ -27,7 +27,7 @@ Now we create a Getter, which reacts to `GET` requests. Drag and drop the item `
 
 Now we can generate the server by clicking on "Generate Java Webserver". Enter any name or package structure that you like, make sure that "Create Standalone Application" is enabled and click on "Generate Code" to create the server.
 
-Now you can find a new folder called "AutomaticPrototypes" in the same folder in which the AutoWoT application is located. Open Eclipse or any other IDE and import the content of the "AutomaticPrototypes" folder.
+Now you can find a new folder called `AutomaticPrototypes` in the same folder in which the AutoWoT application is located. Open Eclipse or any other IDE and import the content of the `AutomaticPrototypes` folder.
 
 Locate the file Handler.java, open it and you will see the two functions 'getNameHandler' and 'postNameHandler'.
 
