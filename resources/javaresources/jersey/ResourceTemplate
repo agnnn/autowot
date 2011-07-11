@@ -73,6 +73,17 @@ public class {{ClassName}} extends BaseResource {
         return getRepresentationXML();
     }
     
+    // Handle text/plain requests
+    @GET 
+    @Produces("text/plain")
+    public String handleGetPlainText(@Context HttpServletRequest request, @Context UriInfo uri) {
+		{{ResourceProtectorGet}}
+        parseResourceInformation(request, uri);
+        {{GetterMethod}}
+
+    	return getterValue;
+    }
+    
     {{PosterMethodDeclarations}}
     
     {{PutterMethodDeclarations}}
