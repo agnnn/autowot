@@ -1048,8 +1048,8 @@ public abstract class BaseResource {
 				}
 				dynCursor = dynCursor.getParentNode();
 			}
-			System.out.println(inOrderPathVariables);
-			System.out.println(inOrderCollectionMethods);
+			// System.out.println(inOrderPathVariables);
+			// System.out.println(inOrderCollectionMethods);
 		}
 	}
 	
