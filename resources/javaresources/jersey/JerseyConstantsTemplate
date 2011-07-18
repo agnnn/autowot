@@ -21,7 +21,7 @@ public class JerseyConstants {
 	public static final String RESOURCES_FEEDS_PATH = "/feeds";
 		
 	// Whether or not to use Microformat annotations
-	public static Boolean USE_MICROFORMAT = true;
+	public static Boolean USE_MICROFORMAT = false;
 	
 	public static final Boolean USE_BASIC_AUTH = false;
 	public static final String REALM_NAME = "AutoWoT Secure Area";
