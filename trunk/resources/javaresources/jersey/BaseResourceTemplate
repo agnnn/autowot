@@ -277,235 +277,235 @@ public abstract class BaseResource {
 	}
 	
 	protected String unifiedMicroformat() {
-		boolean useProduct = true;
-		boolean useReview = false;
-		boolean useListing = false;
-		boolean useGeo = false;
-		boolean useRESTS = false;
-		boolean useAdditional = false;
-
-		String nameProperty = resourceName;
-		String identifierValueProperty = null;
-		String identifierTypeProperty = null;
-		String categoryProperty = null;
-		String brandProperty = "AutoWoT - Automatic Prototyping for the Web of Things";
-		String priceProperty = null;
-		String descriptionProperty = resourceDescription;
-		String photoProperty = null;
-		String urlProperty = null;
-
-		String reviewDescriptionProperty = "This Resource has not yet been reviewed!";
-		String reviewItemtypeProperty = null;
-		String reviewerNameProperty = null;
-		String reviewDateReviewedProperty = null;
-		String reviewRatingProperty = null;
-		List<String> reviewTagsProperty = new ArrayList<String>();
-		reviewTagsProperty.add("Web of Things Testbed");
-
-		String listingActionProperty = null;
-		String listerNameProperty = null;
-		String listingDescriptionProperty = null;
-		String listingDateListedProperty = null;
-		String listingDateExpiredProperty = null;
-		String listingPriceProperty = null;
-
-		String geoLatitudeProperty = "47.378088";
-		String geoLongitudeProperty = "8.549902";
-		String geoAltitudeProperty = null;
-
-		String externalHierarchyProperty = Handler.getLocation(null);
-
-		// hRESTS, currently only allows one operation per service
-		List<RESTSService> restsServices = new ArrayList<RESTSService>();
-
-		if (getterExists) {
-			RESTSService service = new RESTSService();
-
-			service.setLabel(getterDescription);
-			service.setDataFormat("String");
-
-			RESTSOperation operation = new RESTSOperation();
-			operation.setAddress(hostIdentifier + resourceURI);
-			operation.setMethod("GET");
-			operation.setOutput(getterName);
-			operation.setInput("");
-
-			service.addOperation(operation);
-
-			restsServices.add(service);
-		}
-
-		if (posterExists) {
-			RESTSService service = new RESTSService();
-
-			service.setLabel(posterDescription);
-			service.setDataFormat(posterArgumentType);
-
-			RESTSOperation operation = new RESTSOperation();
-			operation.setAddress(hostIdentifier + resourceURI);
-			operation.setMethod("POST");
-			operation.setInput(posterName);
-			operation.setOutput("The updated Resource");
-
-			service.addOperation(operation);
-
-			restsServices.add(service);
-		}
-
-		if (putterExists) {
-			RESTSService service = new RESTSService();
-
-			service.setLabel(putterDescription);
-			service.setDataFormat(putterArgumentType);
-
-			RESTSOperation operation = new RESTSOperation();
-			operation.setAddress(hostIdentifier + resourceURI);
-			operation.setMethod("PUT");
-			operation.setInput(putterName);
-			operation.setOutput("The updated Resource");
-
-			service.addOperation(operation);
-
-			restsServices.add(service);
-		}
-
-		if (deleterExists) {
-			RESTSService service = new RESTSService();
-
-			service.setLabel(deleterDescription);
-			service.setDataFormat("");
-
-			RESTSOperation operation = new RESTSOperation();
-			operation.setAddress(hostIdentifier + resourceURI);
-			operation.setMethod("DELETE");
-			operation.setInput("");
-			operation.setOutput("");
-
-			service.addOperation(operation);
-
-			restsServices.add(service);
-		}
-		
-		/** HTML Buildup **/
-
 		String returnBuilder = "";
-
-		returnBuilder += "<p class = \"bigspacing\"><br/></p>\n";
-
-		if (useProduct) {
-			returnBuilder += "<h2 class = \"mftitle stress\">hProduct</h2><span class=\"hproduct\">\n";
-			if (nameProperty != null) returnBuilder += "<span class=\"mftitle\">Name: </span><span class=\"fn\">" + nameProperty + "</span><br/>\n";
-			if (identifierTypeProperty != null && identifierValueProperty != null) { 
-				returnBuilder += "<span class=\"mftitle\">UUID: </span><span class=\"identifier\"><span class = \"type\">" + identifierTypeProperty + "</span><span class = \"value\">" + identifierValueProperty + "</span></span><br/>\n";
-			}
-			returnBuilder += "<span class=\"mftitle\">Category: </span><span class=\"category\">" + categoryProperty + "</span><br/>\n";
-			if (brandProperty != null) returnBuilder += "<span class=\"mftitle\">Brand: </span><span class=\"brand\"><span class=\"fn n\"><span class=\"given-name\">" + brandProperty + "</span></span></span><br/>\n";
-			if (priceProperty != null) returnBuilder += "<span class=\"mftitle\">Price: </span><span class=\"price\">" + priceProperty + "</span><br/>\n";
-			if (descriptionProperty != null) returnBuilder += "<span class=\"mftitle\">Description: </span><span class=\"description\">" + descriptionProperty + "</span><br/>\n";
-			if (photoProperty != null) returnBuilder += "<span class=\"mftitle\">Photo: </span><a class=\"photo\" href=\"" + photoProperty + "\">" + photoProperty + "</a><br/>\n";
-			if (urlProperty != null) returnBuilder += "<span class=\"mftitle\">URL: </span><a class=\"url\" href=\"" + urlProperty + "\">" + urlProperty + "</a><br/>\n";
-
-			if (externalHierarchyProperty != null) {
-				returnBuilder += "<div class=\"adr\">";
-				returnBuilder += "<span class=\"mftitle\">External Hierarchy: </span><span class=\"external-hierarchy\">" + externalHierarchyProperty + "</span><br/>\n";
-				returnBuilder += "</div>";
-			}
-
-			/*
-			returnBuilder += "<div class=\"adr\">";
-			if (externalHierarchyProperty != null) returnBuilder += "<span class=\"mftitle\">External Hierarchy: </span><span class=\"external-hierarchy\">/europe/ch/ethz/cnb</span><br/>\n";
-			"<span class=\"mftitle\">Street: </span><span class=\"street-address\">Karlsplatz 13</span><br/>\n" +
-			"<span class=\"mftitle\">Locality: </span><span class=\"locality\">Vienna</span><br/>\n" +
-			"<span class=\"mftitle\">Region: </span><abbr class=\"region\" title=\"Vienna\">W</abbr><br/>\n" +
-			"<span class=\"mftitle\">Postal Code: </span><span class=\"postal-code\">1040</span><br/>\n" +
-			"<span class=\"mftitle\">Country Name: </span><span class=\"country-name\">Austria</span><br/>\n" +
-			"<span class=\"mftitle\">External Hierarchy: </span><span class=\"external-hierarchy\">/europe/at/tuwien</span><br/>\n" +
-			returnBuilder += "</div>";
-			*/
-
-			returnBuilder += "</span>\n\n";
-		}
-
-		if (useReview) {
-			returnBuilder += "<h2 class = \"mftitle stress\">hReview</h2><span class=\"hreview\">\n";
-			returnBuilder += "";
-			if (reviewDescriptionProperty != null) returnBuilder += "<span class=\"mftitle\">Description: </span><span class=\"description\">" + reviewDescriptionProperty + "</span><br/>\n";
-			if (reviewItemtypeProperty != null) returnBuilder += "<span class=\"mftitle\">Item Type: </span><span class=\"type\">" + reviewItemtypeProperty + "</span><br/>\n";
-			if (reviewerNameProperty != null) returnBuilder += "<span class=\"mftitle\">Reviewer: </span><span class=\"reviewer\"><span class=\"fn n\"><span class=\"given-name\">" + reviewerNameProperty + "</span></span></span><br/>\n";
-			if (reviewDateReviewedProperty != null) returnBuilder += "<span class=\"mftitle\">Date Reviewed: </span><span class=\"dtreviewed\">" + reviewDateReviewedProperty + "</span><br/>\n";
-			if (reviewRatingProperty != null) returnBuilder += "<span class=\"mftitle\">Rating: </span><span class=\"rating\">" + reviewRatingProperty + "</span><br/>\n";
-			if (reviewTagsProperty != null) {
-				returnBuilder += "<span class=\"mftitle\">Tags: </span><span class=\"tags\">\n";
-				if (reviewTagsProperty.size() > 0) {
-					returnBuilder += "<ul>\n";
-					for (String tag : reviewTagsProperty) {
-						returnBuilder += "<li><span class=\"tag\">" + tag + "</span></li>\n";	
-					}
-					returnBuilder += "</ul>";
-				}
-				returnBuilder += "</span>";
-			}
-			returnBuilder += "</span>\n\n";
-		}
-
-		if (useListing) {
-			returnBuilder += "<h2 class = \"mftitle stress\">hListing</h2><span class=\"hlisting\">\n";
-			if (listingActionProperty != null) returnBuilder += "<span class=\"mftitle\">Listing Action: </span><span class=\"action\">" + listingActionProperty + "</span><br/>\n";
-			if (listerNameProperty != null) returnBuilder += "<span class=\"mftitle\">Lister: </span><span class = \"lister\"><span class=\"fn n\"><span class=\"given-name\">" + listerNameProperty + "</span></span></span><br/>\n";
-			if (listingDescriptionProperty != null) returnBuilder += "<span class=\"mftitle\">Description: </span><span class=\"description\">" + listingDescriptionProperty + "</span><br/>\n";
-			if (listingDateListedProperty != null) returnBuilder += "<span class=\"mftitle\">Date Listed: </span><span class=\"dtlisted\">" + listingDateListedProperty + "</span><br/>\n";
-			if (listingDateExpiredProperty != null) returnBuilder += "<span class=\"mftitle\">Date Expired: </span><span class=\"dtexpired\">" + listingDateExpiredProperty + "</span><br/>\n";
-			if (listingPriceProperty != null) returnBuilder += "<span class=\"mftitle\">Price: </span><span class=\"price\">" + listingPriceProperty + "</span><br/>\n";
-			returnBuilder += "</span>\n";
-		}
-
-		if (useGeo) {
-			returnBuilder += "<h2 class = \"mftitle stress\">Geo</h2><span class=\"geo\">\n"; 
-			if (geoLatitudeProperty != null) returnBuilder += "<span class=\"mftitle\">Latitude: </span><span class=\"latitude\">" + geoLatitudeProperty + "</span><br/>\n";
-			if (geoLongitudeProperty != null) returnBuilder += "<span class=\"mftitle\">Longitude: </span><span class=\"longitude\">" + geoLongitudeProperty + "</span><br/>\n";
-			if (geoAltitudeProperty != null) returnBuilder += "<span class=\"mftitle\">Altitude: </span><span class=\"altitude\">" + geoAltitudeProperty + "</span><br/>\n";
-			returnBuilder += "</span>\n";
-		}
-
-		if (useRESTS) {
-			if (restsServices.size() > 0) {
-				returnBuilder += "<h2 class = \"mftitle stress\">hRESTS</h2><span class=\"hrests\">\n";
-
-				for (RESTSService service : restsServices) {
-					returnBuilder += "<span class=\"service\">\n" +
-					"<span class=\"mftitle\">Label: </span><span class=\"label\">" + service.getLabel() + "</span><br/>\n" +
-					"<span class=\"mftitle\">Data Format: </span><span class=\"data-format\">" + service.getDataFormat() + "</span><br/>\n";
-
-					for (RESTSOperation operation : service.getOperations()) {
-						returnBuilder += "<span class=\"mftitle\">Operation: </span><span class=\"operation\"><br/>" +
-						"<span class=\"mftitle\">Method: </span><span class=\"method\">" + operation.getMethod() + "</span><br/>\n" +
-						"<span class=\"mftitle\">Address: </span><span class=\"address\">" + operation.getAddress() + "</span><br/>\n" +
-						"<span class=\"mftitle\">Input: </span><span class=\"input\">" + operation.getInput() + "</span><br/>\n" +
-						"<span class=\"mftitle\">Output: </span><span class=\"output\">" + operation.getOutput() + "</span><br/>\n" +
-						"</span>\n";
-					}
-
-					returnBuilder += "</span><br/>\n";
-				}
-				returnBuilder += "</span>\n";
-			}
-		}
-
-		if (useAdditional) {
-			returnBuilder += "<h2 class=\"mftitle stress\">Additional Information</h2><span class=\"infraWOTadditional\">\n";
-
-			// Handling children
-
-			returnBuilder += "<span class=\"mftitle\">Subresources</span>\n";
-			returnBuilder += "<ul class=\"subresources\">\n";
-			for (int i = 0; i < childrenCount; i++) {
-				returnBuilder += "<li><span class=\"hsubresource\"><span class=\"subname\">" + childrenNames.get(i) + "</span> <span class=\"suburl\" href=\"" + hostIdentifier + childrenURIs.get(i) + "\">" + hostIdentifier + childrenURIs.get(i) + "</span></span></li>\n";
-			}			
-			returnBuilder += "</ul>\n";
-
-			returnBuilder += "</span>";
-		}
-
+//		boolean useProduct = true;
+//		boolean useReview = false;
+//		boolean useListing = false;
+//		boolean useGeo = false;
+//		boolean useRESTS = false;
+//		boolean useAdditional = false;
+//
+//		String nameProperty = resourceName;
+//		String identifierValueProperty = null;
+//		String identifierTypeProperty = null;
+//		String categoryProperty = null;
+//		String brandProperty = "AutoWoT - Automatic Prototyping for the Web of Things";
+//		String priceProperty = null;
+//		String descriptionProperty = resourceDescription;
+//		String photoProperty = null;
+//		String urlProperty = null;
+//
+//		String reviewDescriptionProperty = "This Resource has not yet been reviewed!";
+//		String reviewItemtypeProperty = null;
+//		String reviewerNameProperty = null;
+//		String reviewDateReviewedProperty = null;
+//		String reviewRatingProperty = null;
+//		List<String> reviewTagsProperty = new ArrayList<String>();
+//		reviewTagsProperty.add("Web of Things Testbed");
+//
+//		String listingActionProperty = null;
+//		String listerNameProperty = null;
+//		String listingDescriptionProperty = null;
+//		String listingDateListedProperty = null;
+//		String listingDateExpiredProperty = null;
+//		String listingPriceProperty = null;
+//
+//		String geoLatitudeProperty = "47.378088";
+//		String geoLongitudeProperty = "8.549902";
+//		String geoAltitudeProperty = null;
+//
+//		String externalHierarchyProperty = Handler.getLocation(null);
+//
+//		// hRESTS, currently only allows one operation per service
+//		List<RESTSService> restsServices = new ArrayList<RESTSService>();
+//
+//		if (getterExists) {
+//			RESTSService service = new RESTSService();
+//
+//			service.setLabel(getterDescription);
+//			service.setDataFormat("String");
+//
+//			RESTSOperation operation = new RESTSOperation();
+//			operation.setAddress(hostIdentifier + resourceURI);
+//			operation.setMethod("GET");
+//			operation.setOutput(getterName);
+//			operation.setInput("");
+//
+//			service.addOperation(operation);
+//
+//			restsServices.add(service);
+//		}
+//
+//		if (posterExists) {
+//			RESTSService service = new RESTSService();
+//
+//			service.setLabel(posterDescription);
+//			service.setDataFormat(posterArgumentType);
+//
+//			RESTSOperation operation = new RESTSOperation();
+//			operation.setAddress(hostIdentifier + resourceURI);
+//			operation.setMethod("POST");
+//			operation.setInput(posterName);
+//			operation.setOutput("The updated Resource");
+//
+//			service.addOperation(operation);
+//
+//			restsServices.add(service);
+//		}
+//
+//		if (putterExists) {
+//			RESTSService service = new RESTSService();
+//
+//			service.setLabel(putterDescription);
+//			service.setDataFormat(putterArgumentType);
+//
+//			RESTSOperation operation = new RESTSOperation();
+//			operation.setAddress(hostIdentifier + resourceURI);
+//			operation.setMethod("PUT");
+//			operation.setInput(putterName);
+//			operation.setOutput("The updated Resource");
+//
+//			service.addOperation(operation);
+//
+//			restsServices.add(service);
+//		}
+//
+//		if (deleterExists) {
+//			RESTSService service = new RESTSService();
+//
+//			service.setLabel(deleterDescription);
+//			service.setDataFormat("");
+//
+//			RESTSOperation operation = new RESTSOperation();
+//			operation.setAddress(hostIdentifier + resourceURI);
+//			operation.setMethod("DELETE");
+//			operation.setInput("");
+//			operation.setOutput("");
+//
+//			service.addOperation(operation);
+//
+//			restsServices.add(service);
+//		}
+//		
+//		/** HTML Buildup **/
+//
+//
+//		returnBuilder += "<p class = \"bigspacing\"><br/></p>\n";
+//
+//		if (useProduct) {
+//			returnBuilder += "<h2 class = \"mftitle stress\">hProduct</h2><span class=\"hproduct\">\n";
+//			if (nameProperty != null) returnBuilder += "<span class=\"mftitle\">Name: </span><span class=\"fn\">" + nameProperty + "</span><br/>\n";
+//			if (identifierTypeProperty != null && identifierValueProperty != null) { 
+//				returnBuilder += "<span class=\"mftitle\">UUID: </span><span class=\"identifier\"><span class = \"type\">" + identifierTypeProperty + "</span><span class = \"value\">" + identifierValueProperty + "</span></span><br/>\n";
+//			}
+//			returnBuilder += "<span class=\"mftitle\">Category: </span><span class=\"category\">" + categoryProperty + "</span><br/>\n";
+//			if (brandProperty != null) returnBuilder += "<span class=\"mftitle\">Brand: </span><span class=\"brand\"><span class=\"fn n\"><span class=\"given-name\">" + brandProperty + "</span></span></span><br/>\n";
+//			if (priceProperty != null) returnBuilder += "<span class=\"mftitle\">Price: </span><span class=\"price\">" + priceProperty + "</span><br/>\n";
+//			if (descriptionProperty != null) returnBuilder += "<span class=\"mftitle\">Description: </span><span class=\"description\">" + descriptionProperty + "</span><br/>\n";
+//			if (photoProperty != null) returnBuilder += "<span class=\"mftitle\">Photo: </span><a class=\"photo\" href=\"" + photoProperty + "\">" + photoProperty + "</a><br/>\n";
+//			if (urlProperty != null) returnBuilder += "<span class=\"mftitle\">URL: </span><a class=\"url\" href=\"" + urlProperty + "\">" + urlProperty + "</a><br/>\n";
+//
+//			if (externalHierarchyProperty != null) {
+//				returnBuilder += "<div class=\"adr\">";
+//				returnBuilder += "<span class=\"mftitle\">External Hierarchy: </span><span class=\"external-hierarchy\">" + externalHierarchyProperty + "</span><br/>\n";
+//				returnBuilder += "</div>";
+//			}
+//
+//			/*
+//			returnBuilder += "<div class=\"adr\">";
+//			if (externalHierarchyProperty != null) returnBuilder += "<span class=\"mftitle\">External Hierarchy: </span><span class=\"external-hierarchy\">/europe/ch/ethz/cnb</span><br/>\n";
+//			"<span class=\"mftitle\">Street: </span><span class=\"street-address\">Karlsplatz 13</span><br/>\n" +
+//			"<span class=\"mftitle\">Locality: </span><span class=\"locality\">Vienna</span><br/>\n" +
+//			"<span class=\"mftitle\">Region: </span><abbr class=\"region\" title=\"Vienna\">W</abbr><br/>\n" +
+//			"<span class=\"mftitle\">Postal Code: </span><span class=\"postal-code\">1040</span><br/>\n" +
+//			"<span class=\"mftitle\">Country Name: </span><span class=\"country-name\">Austria</span><br/>\n" +
+//			"<span class=\"mftitle\">External Hierarchy: </span><span class=\"external-hierarchy\">/europe/at/tuwien</span><br/>\n" +
+//			returnBuilder += "</div>";
+//			*/
+//
+//			returnBuilder += "</span>\n\n";
+//		}
+//
+//		if (useReview) {
+//			returnBuilder += "<h2 class = \"mftitle stress\">hReview</h2><span class=\"hreview\">\n";
+//			returnBuilder += "";
+//			if (reviewDescriptionProperty != null) returnBuilder += "<span class=\"mftitle\">Description: </span><span class=\"description\">" + reviewDescriptionProperty + "</span><br/>\n";
+//			if (reviewItemtypeProperty != null) returnBuilder += "<span class=\"mftitle\">Item Type: </span><span class=\"type\">" + reviewItemtypeProperty + "</span><br/>\n";
+//			if (reviewerNameProperty != null) returnBuilder += "<span class=\"mftitle\">Reviewer: </span><span class=\"reviewer\"><span class=\"fn n\"><span class=\"given-name\">" + reviewerNameProperty + "</span></span></span><br/>\n";
+//			if (reviewDateReviewedProperty != null) returnBuilder += "<span class=\"mftitle\">Date Reviewed: </span><span class=\"dtreviewed\">" + reviewDateReviewedProperty + "</span><br/>\n";
+//			if (reviewRatingProperty != null) returnBuilder += "<span class=\"mftitle\">Rating: </span><span class=\"rating\">" + reviewRatingProperty + "</span><br/>\n";
+//			if (reviewTagsProperty != null) {
+//				returnBuilder += "<span class=\"mftitle\">Tags: </span><span class=\"tags\">\n";
+//				if (reviewTagsProperty.size() > 0) {
+//					returnBuilder += "<ul>\n";
+//					for (String tag : reviewTagsProperty) {
+//						returnBuilder += "<li><span class=\"tag\">" + tag + "</span></li>\n";	
+//					}
+//					returnBuilder += "</ul>";
+//				}
+//				returnBuilder += "</span>";
+//			}
+//			returnBuilder += "</span>\n\n";
+//		}
+//
+//		if (useListing) {
+//			returnBuilder += "<h2 class = \"mftitle stress\">hListing</h2><span class=\"hlisting\">\n";
+//			if (listingActionProperty != null) returnBuilder += "<span class=\"mftitle\">Listing Action: </span><span class=\"action\">" + listingActionProperty + "</span><br/>\n";
+//			if (listerNameProperty != null) returnBuilder += "<span class=\"mftitle\">Lister: </span><span class = \"lister\"><span class=\"fn n\"><span class=\"given-name\">" + listerNameProperty + "</span></span></span><br/>\n";
+//			if (listingDescriptionProperty != null) returnBuilder += "<span class=\"mftitle\">Description: </span><span class=\"description\">" + listingDescriptionProperty + "</span><br/>\n";
+//			if (listingDateListedProperty != null) returnBuilder += "<span class=\"mftitle\">Date Listed: </span><span class=\"dtlisted\">" + listingDateListedProperty + "</span><br/>\n";
+//			if (listingDateExpiredProperty != null) returnBuilder += "<span class=\"mftitle\">Date Expired: </span><span class=\"dtexpired\">" + listingDateExpiredProperty + "</span><br/>\n";
+//			if (listingPriceProperty != null) returnBuilder += "<span class=\"mftitle\">Price: </span><span class=\"price\">" + listingPriceProperty + "</span><br/>\n";
+//			returnBuilder += "</span>\n";
+//		}
+//
+//		if (useGeo) {
+//			returnBuilder += "<h2 class = \"mftitle stress\">Geo</h2><span class=\"geo\">\n"; 
+//			if (geoLatitudeProperty != null) returnBuilder += "<span class=\"mftitle\">Latitude: </span><span class=\"latitude\">" + geoLatitudeProperty + "</span><br/>\n";
+//			if (geoLongitudeProperty != null) returnBuilder += "<span class=\"mftitle\">Longitude: </span><span class=\"longitude\">" + geoLongitudeProperty + "</span><br/>\n";
+//			if (geoAltitudeProperty != null) returnBuilder += "<span class=\"mftitle\">Altitude: </span><span class=\"altitude\">" + geoAltitudeProperty + "</span><br/>\n";
+//			returnBuilder += "</span>\n";
+//		}
+//
+//		if (useRESTS) {
+//			if (restsServices.size() > 0) {
+//				returnBuilder += "<h2 class = \"mftitle stress\">hRESTS</h2><span class=\"hrests\">\n";
+//
+//				for (RESTSService service : restsServices) {
+//					returnBuilder += "<span class=\"service\">\n" +
+//					"<span class=\"mftitle\">Label: </span><span class=\"label\">" + service.getLabel() + "</span><br/>\n" +
+//					"<span class=\"mftitle\">Data Format: </span><span class=\"data-format\">" + service.getDataFormat() + "</span><br/>\n";
+//
+//					for (RESTSOperation operation : service.getOperations()) {
+//						returnBuilder += "<span class=\"mftitle\">Operation: </span><span class=\"operation\"><br/>" +
+//						"<span class=\"mftitle\">Method: </span><span class=\"method\">" + operation.getMethod() + "</span><br/>\n" +
+//						"<span class=\"mftitle\">Address: </span><span class=\"address\">" + operation.getAddress() + "</span><br/>\n" +
+//						"<span class=\"mftitle\">Input: </span><span class=\"input\">" + operation.getInput() + "</span><br/>\n" +
+//						"<span class=\"mftitle\">Output: </span><span class=\"output\">" + operation.getOutput() + "</span><br/>\n" +
+//						"</span>\n";
+//					}
+//
+//					returnBuilder += "</span><br/>\n";
+//				}
+//				returnBuilder += "</span>\n";
+//			}
+//		}
+//
+//		if (useAdditional) {
+//			returnBuilder += "<h2 class=\"mftitle stress\">Additional Information</h2><span class=\"infraWOTadditional\">\n";
+//
+//			// Handling children
+//
+//			returnBuilder += "<span class=\"mftitle\">Subresources</span>\n";
+//			returnBuilder += "<ul class=\"subresources\">\n";
+//			for (int i = 0; i < childrenCount; i++) {
+//				returnBuilder += "<li><span class=\"hsubresource\"><span class=\"subname\">" + childrenNames.get(i) + "</span> <span class=\"suburl\" href=\"" + hostIdentifier + childrenURIs.get(i) + "\">" + hostIdentifier + childrenURIs.get(i) + "</span></span></li>\n";
+//			}			
+//			returnBuilder += "</ul>\n";
+//
+//			returnBuilder += "</span>";
+//		}
+//
 		return returnBuilder;
 	}
 	
