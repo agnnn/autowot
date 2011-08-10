@@ -1,5 +1,7 @@
 package ch.ethz.inf.vs.wot.autowot.ui.dialogs;
 
+import java.io.File;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -17,6 +19,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import ch.ethz.inf.vs.wot.autowot.builders.BuildMode;
+import ch.ethz.inf.vs.wot.autowot.builders.utils.FileOperations;
 import ch.ethz.inf.vs.wot.autowot.commons.Constants;
 import ch.ethz.inf.vs.wot.autowot.commons.ToolTips;
 import ch.ethz.inf.vs.wot.autowot.core.AutoWoT;
@@ -1094,6 +1097,21 @@ public class DialogBoxFactory {
 		data.heightHint = 20;
 		dummy.setLayoutData(data);
 		
+			
+		Label resTargetPathLabel = new Label (dialog, SWT.NONE);
+		resTargetPathLabel.setText ("Location to store generated files at:");
+		data = new GridData();
+		data.widthHint = 300;
+		data.horizontalSpan = 1;
+		resTargetPathLabel.setLayoutData (data);
+		final Text resTargetPathText = new Text (dialog, SWT.BORDER);
+		resTargetPathText.setText(FileOperations.getCurrentSystemPath() + File.separator + Constants.BASE_FOLDER_NAME + "JavaProject" + File.separator);
+		data = new GridData ();
+		data.widthHint = 300;
+		data.horizontalSpan = 3;
+		resTargetPathText.setLayoutData (data);
+		
+		
 		Button ok = new Button (dialog, SWT.PUSH);
 		ok.setText ("Create Java Code!");
 		data = new GridData (GridData.HORIZONTAL_ALIGN_CENTER);
@@ -1114,6 +1132,7 @@ public class DialogBoxFactory {
 				} else {
 					returnBuildMode = BuildMode.NONE;
 				}
+				returnArgumentType = resTargetPathText.getText().trim();
 				
 				if (returnName.isEmpty()) {
 					System.out.println("Project Name cannot be empty!");
@@ -1127,8 +1146,12 @@ public class DialogBoxFactory {
 					System.out.println("Handler cannot be empty!");
 					return;
 				}
-				if (returnIsCollection == null) {
-					System.out.println("Boolean cannot be null!");
+				if (returnIsStandalone == null) {
+					System.out.println("Standalone property cannot be null!");
+					return;
+				}
+				if (returnArgumentType.isEmpty()) {
+					System.out.println("Target path cannot be empty!");
 					return;
 				}
 
@@ -1141,6 +1164,41 @@ public class DialogBoxFactory {
 		resNameLabel.setToolTipText(ToolTips.GET_JAVA_CREATION_DATA_PROTOTYPES_PACKAGE);
 		resHandlerPackageLabel.setToolTipText(ToolTips.GET_JAVA_CREATION_DATA_MANAGEMENT_PACKAGE);
 		
+		dialog.setDefaultButton (ok);
+		dialog.pack();
+		dialog.open();
+
+		while (!dialog.isDisposed ()) {
+			if (!parentShell.getDisplay().readAndDispatch ()) parentShell.getDisplay().sleep ();
+		}
+	}
+	
+	/**
+	 * Get the necessary data to create the java classes
+	 */
+	public void getJavaConfirmationDialog() {
+		final Shell dialog = prepareDialog("Confirmation");
+		GridData data;
+
+		Label resNameLabel = new Label (dialog, SWT.NONE);
+		resNameLabel.setText ("AutoWoT Web server has been created. Project files have been stored at " + FileOperations.getCurrentSystemPath() + File.separator + Constants.BASE_FOLDER_NAME + "JavaProject" + File.separator);
+		data = new GridData (GridData.HORIZONTAL_ALIGN_CENTER);
+		data.horizontalSpan = 4;
+		resNameLabel.setLayoutData (data);
+		
+		Button ok = new Button (dialog, SWT.PUSH);
+		ok.setText ("OK!");
+		data = new GridData (GridData.HORIZONTAL_ALIGN_CENTER);
+		data.horizontalSpan = 4;
+		ok.setLayoutData (data);
+		ok.addSelectionListener (new SelectionAdapter () {
+			@Override
+			public void widgetSelected (SelectionEvent e) {
+				cancelled = false;
+				dialog.close();
+			}
+		});
+
 		dialog.setDefaultButton (ok);
 		dialog.pack();
 		dialog.open();
@@ -1521,13 +1579,13 @@ public class DialogBoxFactory {
 		dialog.setBounds(nLeft, nTop, p.x, p.y);
 		
 		
-		Label dummy = new Label (dialog, SWT.NONE);
-		dummy.setText("");
-		GridData data = new GridData ();
-		data.horizontalSpan = 4;
-		data.heightHint = 30;
-		data.horizontalAlignment = GridData.CENTER;
-		dummy.setLayoutData (data);	
+//		Label dummy = new Label (dialog, SWT.NONE);
+//		dummy.setText("");
+//		GridData data = new GridData ();
+//		data.horizontalSpan = 4;
+//		data.heightHint = 10;
+//		data.horizontalAlignment = GridData.CENTER;
+//		dummy.setLayoutData (data);	
 		
 		return dialog;
 	}

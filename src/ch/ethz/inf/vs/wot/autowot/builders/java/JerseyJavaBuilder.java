@@ -4,11 +4,14 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import ch.ethz.inf.vs.wot.autowot.builders.utils.FileOperations;
+import ch.ethz.inf.vs.wot.autowot.builders.utils.FileUtils;
+import ch.ethz.inf.vs.wot.autowot.builders.xml.XMLBuilder;
 import ch.ethz.inf.vs.wot.autowot.commons.Constants;
 import ch.ethz.inf.vs.wot.autowot.project.Project;
 import ch.ethz.inf.vs.wot.autowot.project.handlers.HandlerCallback;
@@ -43,12 +46,31 @@ public class JerseyJavaBuilder extends AbstractJavaBuilder {
 	 * Create the web server
 	 */
 	public void build() {
+
 		// Delete Old Data
 		FileOperations.deleteDir(outputBaseFolderName);
 		// Create Directories
 		createAndCopyResourceDirectories();
 		// Copy Structure Configuration File
 		copyStructureConfiguration();
+		
+		// Get templates
+		File outFile2;
+		if (this.getClass().getResource("/javaresources").toString().startsWith("file:")) {
+			outFile2 = new File(outputBaseFolderName);
+			inputFolderName = outFile2.getAbsolutePath() + "/javaresources/jersey/";
+			inputCommonsFolderName = outFile2.getAbsolutePath() + "/javaresources/commons/";
+		}
+		else {
+			outFile2 = new File(outputBaseFolderName + "/javaresources");
+			inputFolderName = outFile2.getAbsolutePath() + "/jersey/";
+			inputCommonsFolderName = outFile2.getAbsolutePath() + "/commons/";
+		}
+		
+		FileUtils.copyResourcesRecursively(this.getClass().getResource("/javaresources"), outFile2);
+		 
+		System.out.println("Copying required templates at " + this.getClass().getResource("/javaresources") + " to " + outFile2.getAbsolutePath());
+		
 		// Parse the Java source, simultaneously create the root application
 		parseToJavaClasses();
 		// Copy BaseResource
@@ -68,6 +90,10 @@ public class JerseyJavaBuilder extends AbstractJavaBuilder {
 		if(makeStandalone) {
 			createProjectFiles();
 		}
+		
+		// Clean up
+		FileOperations.deleteDir(outputBaseFolderName + "/javaresources");
+		FileOperations.deleteDir(XMLBuilder.resourceConfigTempFolder);
 	}
 
 	/**
@@ -247,12 +273,18 @@ public class JerseyJavaBuilder extends AbstractJavaBuilder {
 	 * Create Jersey Java class
 	 */
 	protected List<ResourceItem> writeSingleSource(ResourceItem currentClass) {
-		try {
-			FileOperations.copyFile(new File(Constants.SOURCE_FOLDER + "webresources" + System.getProperty("file.separator") + "html" + System.getProperty("file.separator") + "ResourceHTML"), new File(outputWebresourcesFolderName + "html" + System.getProperty("file.separator") + currentClass.getClassName() + ".html" ), false);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		BufferedWriter myWriter = FileOperations.createFile(outputResourcesFolderName + System.getProperty("file.separator") + currentClass.getClassName() + ".java");
+//		try {
+//			FileOperations.copyFile(new File(Constants.SOURCE_FOLDER + "webresources" + System.getProperty("file.separator") + "html" + System.getProperty("file.separator") + "ResourceHTML"), new File(outputWebresourcesFolderName + "html" + System.getProperty("file.separator") + currentClass.getClassName() + ".html" ), false);
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+		
+		InputStream inStream = this.getClass().getResourceAsStream("/webresources/html/ResourceHTML");
+		FileUtils.copyStream(inStream, new File(outputWebresourcesFolderName + "html" + File.separator + currentClass.getClassName() + ".html"));
+		
+		// FileUtils.copyFile(new File(Constants.SOURCE_FOLDER + "webresources" + System.getProperty("file.separator") + "html" + System.getProperty("file.separator") + "ResourceHTML"), new File(outputWebresourcesFolderName + "html" + System.getProperty("file.separator") + currentClass.getClassName() + ".html"));
+
+		BufferedWriter myWriter = FileOperations.createFile(outputResourcesFolderName + File.separator + currentClass.getClassName() + ".java");
 
 		try {
 			String resourceTemplate = FileOperations.readFileAsString(inputFolderName + "ResourceTemplate");
