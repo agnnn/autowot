@@ -315,15 +315,22 @@ public class MainUserInterface extends UserInterface {
 					application.getCurrentProject().setPackageCanonical(dbf.returnJavaPackage);
 					application.getCurrentProject().setHandlerCanonical(dbf.returnHandlerPackage);
 					application.getCurrentProject().setMakeStandalone(dbf.returnIsStandalone);
-
+					
+					if (!dbf.returnArgumentType.endsWith("/")) dbf.returnArgumentType += "/";
+					application.getCurrentProject().setFileSystemPath(dbf.returnArgumentType);
+					
 					XMLBuilder.createXMLStructure(application.getCurrentProject());
 					AbstractJavaBuilder myJavaBuilder = null;
 					if(dbf.returnBuildMode == BuildMode.RESTLET) {
-						myJavaBuilder = new RestletJavaBuilder(application.getCurrentProject());
+						// FIXME
+//						myJavaBuilder = new RestletJavaBuilder(application.getCurrentProject());
+						myJavaBuilder = new JerseyJavaBuilder(application.getCurrentProject());
 					} else if(dbf.returnBuildMode == BuildMode.JERSEY) {
 						myJavaBuilder = new JerseyJavaBuilder(application.getCurrentProject());
 					}
 					myJavaBuilder.build();
+					
+					// dbf.getJavaConfirmationDialog();
 				}
 			}
 

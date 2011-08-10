@@ -12,7 +12,7 @@ public class Constants {
 	public static String MANAGEMENT_PACKAGE = "";
 	public static String RESOURCE_PACKAGE = "";
 	
-	public final static String BASE_FOLDER_NAME = "AutomaticPrototypes/";
+	public final static String BASE_FOLDER_NAME = "AutoWoT_Generated_Files/";
 	public final static String PROTOTYPES_FOLDER_NAME = BASE_FOLDER_NAME + "PlainJava/prototypes/";
 	public final static String WEBRESOURCES_FOLDER_NAME = BASE_FOLDER_NAME + "PlainJava/webresources/";
 	public final static String IMAGES_FOLDER_NAME = WEBRESOURCES_FOLDER_NAME + "images/";
@@ -24,7 +24,7 @@ public class Constants {
 	public static final String BASE_RESOURCE_NAME = "BaseResource.java";
 	public static final String CSS_FILE_NAME = "main.css";
 	
-	public static final String SOURCE_FOLDER = "resources/";	// This was formerly "building_blocks/", but that directory was added to the source folders
+	public static final String SOURCE_FOLDER = "resources/";
 	public static final String RESTLET_MAIN_SOURCE_NAME = SOURCE_FOLDER + "RestletMain";
 	public static final String BASE_RESOURCE_SOURCE_NAME = SOURCE_FOLDER + "BaseResource";
 	public static final String CSS_FILE_SOURCE_NAME = SOURCE_FOLDER + "main.css";

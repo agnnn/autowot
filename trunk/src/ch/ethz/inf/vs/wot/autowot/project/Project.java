@@ -19,7 +19,8 @@ public class Project {
 	private String packageCanonical = "ch.ethz.inf.vs.projectname";
 	private String handlerCanonical = "ch.ethz.inf.vs.projectname.Handler";
 	private Boolean makeStandalone = false;
-	
+	private String path = null;
+		
 	private ResourceItem rootResource = null;
 	
 	private List<String> bannedNames = null;
@@ -67,7 +68,15 @@ public class Project {
 	public void setBannedNames(List<String> bannedNames) {
 		this.bannedNames = bannedNames;
 	}
+	
+	public void setFileSystemPath(String path) {
+		this.path = path;
+	}
 
+	public String getFileSystemPath() {
+		return this.path;
+	}
+	
 	public List<String> getBannedNames() {
 		return bannedNames;
 	}

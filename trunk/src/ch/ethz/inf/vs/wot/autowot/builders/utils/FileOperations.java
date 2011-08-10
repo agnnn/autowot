@@ -169,4 +169,17 @@ public class FileOperations {
 		reader.close();
 		return fileData.toString();
 	}
+	
+	
+	public static String getCurrentSystemPath() {
+		try {
+			String path = (new java.io.File(".")).getCanonicalPath();
+			return path;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
 }

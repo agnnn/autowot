@@ -27,6 +27,8 @@ public class XMLBuilder {
 	
 	private static Integer indentation = 0;
 	private static String currentHandlerCanonicalName = "";
+	public static String resourceConfigTempFolder = "resources_obfuscated";
+	public static String resourceConfigTempLocation = "resources_obfuscated/configuration.xml";
 	
 	/**
 	 * Creates XML file of a project
@@ -36,7 +38,7 @@ public class XMLBuilder {
 			File outFile = null;
 			BufferedWriter writer = null;
 			
-			outFile = new File("resources");
+			outFile = new File(resourceConfigTempFolder);
 			System.out.println("Creating " + outFile.getAbsolutePath());
 			if (!outFile.exists()) {
 				outFile.mkdirs();
@@ -45,12 +47,12 @@ public class XMLBuilder {
 			// Open file/create file
 			try {
 				// TODO wrong file load
-				outFile = new File("resources/configuration.xml");
+				outFile = new File(resourceConfigTempLocation);
 				
 				// Create file if it does not exist
 				boolean success = outFile.createNewFile();
 				if (success) {
-					System.out.println("resources/configuration.xml created!");
+					System.out.println(resourceConfigTempLocation + " created!");
 					// File did not exist and was created
 				} else {
 					// File already existed
