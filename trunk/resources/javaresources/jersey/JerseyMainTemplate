@@ -3,6 +3,7 @@ package {{PackageName}};
 import com.sun.grizzly.http.SelectorThread;
 import com.sun.jersey.api.container.grizzly.GrizzlyWebContainerFactory;
 import java.io.IOException;
+import java.net.BindException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,11 @@ public class JerseyMain {
         final Map<String, String> initParams = new HashMap<String, String>();
         initParams.put("com.sun.jersey.config.property.packages", "{{ResourcesPackageName}}");
         System.out.println("Starting Grizzly Web Container...");
-        webServerThread = GrizzlyWebContainerFactory.create(getURI(), initParams);     
+        try {
+        	webServerThread = GrizzlyWebContainerFactory.create(getURI(), initParams);     
+        } catch (BindException e) {
+        	System.out.println("\nProblem Report: Most probably, you already have a server running on port " + JerseyConstants.SERVER_PORT + ".\nChange the SERVER_PORT in " + JerseyConstants.class.getCanonicalName() + ".java to a different value.\n");
+        }     
     }
     
     protected static void stopServer() throws IOException, InstantiationException {
